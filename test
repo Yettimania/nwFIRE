@@ -1,7 +1,0 @@
-#!/bin/sh
-
-python hello.py
-
-$EDITOR profile.yaml
-
-echo 'End of program'
