@@ -26,11 +26,8 @@ class Portfolio:
             print("Unknown selection.") 
 
     def delete(self,name):
-        self.__cash.pop(name,None)
-        self.__investment.pop(name,None)
-        self.__realestate.pop(name,None)
-        self.__equity.pop(name,None)
-        print(self.__investment)
+        self.__assets.pop(name,None)
+        print(self.__assets)
 
     def edit(self,name):
         if self.__assets.get(name) is not None:
@@ -40,10 +37,21 @@ class Portfolio:
             print(index,item)
         index = int(input(f'Select attribute to edit: '))
         selection = list(attributes.keys())[index]
-        value = input(f'Enter value for attribute: ')
-        self.__assets[name][selection] = value
-        print(self.__assets[name])
-
+        value_type = type(self.__assets[name][selection])
+        print(value_type)
+        if value_type is str:
+            value = input(f'Enter value for attribute: ')
+            self.__assets[name][selection] = str(value)
+        if value_type is float:
+            value = input(f'Enter value for attribute: ')
+            self.__assets[name][selection] = float(value)
+        if value_type is list:
+            cash,bonds,stocks = [float(x) for x in input("Enter composition of cash,bonds,stocks: ").split(',')]
+            composition = [cash,bonds,stocks]
+            self.__assets[name][selection] = composition 
+        
+        print(self.__assets[name])                      
+                                                        
     def write(self):
         return None 
 
@@ -110,7 +118,6 @@ kyle = Portfolio()
 
 kyle.add('LLL')
 kyle.add('WFCHK')
-kyle.add('DYNEQ')
 kyle.list_assets()
 kyle.edit('LLL')
 
