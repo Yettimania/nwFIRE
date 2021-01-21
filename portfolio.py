@@ -1,13 +1,17 @@
 class Portfolio:
    
-    def __init__(self):
-        self.__cash = {}
-        self.__investment = {} 
-        self.__realestate = {}
-        self.__equity = {}
+    def __init__(self,fname=None):
+        self.__assets = {}
+        if fname is not None:
+            return 0
+
+    def list_assets(self):
+        print("Assets within portfolio:")
+        print(list(self.__assets.keys()))
+        return list(self.__assets.keys())
 
     def add(self,name):
-
+        print("Selection of asset types:")
         selection = self._asset_prompt(name)
 
         if selection == '1':
@@ -29,34 +33,22 @@ class Portfolio:
         print(self.__investment)
 
     def edit(self,name):
-        if self.__cash.get(name) is not None:
-            x = self.__cash.get(name)
-            print(f'Values to change for {name} asset: {x.keys()}')
-            key = input('Enter key to change: ')
-            value = input('Enter value to change to: ')
-            self.__cash[name].update(key = value)
-            print(self.__cash[name])
-        if self.__investment.get(name) is not None:
-            x = self.__investment.get(name,None)
-            print(f'Values to change for {name} asset: {x.keys()}')
-            key = input('Enter key to change: ')
-            value = input('Enter value to change to: ')
-            self.__investment[name].update(key = value)
-            print(self.__investment[name])
-        if self.__realestate.get(name) is not None:
-            x = self.__realestate.get(name,None)
-            print(f'Values to change for {name} asset: {x.keys()}')
-            key = input('Enter key to change: ')
-            value = input('Enter value to change to: ')
-            self.__realestate[name].update(key = value)
-            print(self.__realestate[name])
-        if self.__equity.get(name) is not None:
-            x = self.__equity.get(name,None)
-            print(f'Values to change for {name} asset: {x.keys()}')
-            key = input('Enter key to change: ')
-            value = input('Enter value to change to: ')
-            self.__equity[name].update(key = value)
-            print(self.__equity[name])
+        if self.__assets.get(name) is not None:
+            attributes  = self.__assets.get(name)
+        print(f'Attributes of {name}:')
+        for index,item in enumerate(list(attributes.keys())):
+            print(index,item)
+        index = int(input(f'Select attribute to edit: '))
+        selection = list(attributes.keys())[index]
+        value = input(f'Enter value for attribute: ')
+        self.__assets[name][selection] = value
+        print(self.__assets[name])
+
+    def write(self):
+        return None 
+
+    def read(self):
+        return None
 
     def _asset_prompt(self,name):
         menu = {}
@@ -97,25 +89,28 @@ class Portfolio:
 
     def _add_cash(self,name):
         amount = input(f'Amount $ in {name} account: ')
-        self.__cash[name] = amount
+        self.__assets[name] = {'value':amount,'type':'cash'}
 
     def _add_investment(self,name):
         shares = input(f'Number of owned shares for {name}: ')
         category = self._morningstar_grid()
         cash,bonds,stocks = [float(x) for x in input("Enter composition of cash,bonds,stocks: ").split(',')]
         composition = [cash,bonds,stocks]
-        self.__investment[name] = {'shares':float(shares),'category':category, 'composition':composition} 
+        self.__assets[name] = {'shares':float(shares),'type':'investment','category':category, 'composition':composition} 
     
     def _add_realestate(self,name):
         amount = input(f'Amount of equity for {name} property: ')
-        self.__realestate[name] = int(amount)
+        self.__assets[name] = {'value':int(amount),'type':'realestate'}
 
     def _add_equity(self,name):
         amount = input(f'Amount of equity for {name} business: ')
-        self.__realestate[name] = int(amount)
-        
+        self.__assets[name] = {'value':int(amount),'type':'equity'}
+
 kyle = Portfolio()
 
 kyle.add('LLL')
+kyle.add('WFCHK')
+kyle.add('DYNEQ')
+kyle.list_assets()
 kyle.edit('LLL')
 
