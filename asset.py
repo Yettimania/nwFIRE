@@ -2,14 +2,53 @@ import yfinance as yf
 
 class Asset:
 
-    def __init__(self,name):
-        self.name = name
-        self.category = self._category_prompt()
-        self.amount = self._get_amount()
-        self.mstar = self._morningstar_grid() 
-        self.composition = self._get_composition()
-        self.ticker = self._get_ticker()
-        self.value = self._get_value() 
+    def __init__(self,name,load=False):
+        if load:
+            self.name = None
+            self.category = None
+            self.amount = None
+            self.mstar = None
+            self.composition = None
+            self.ticker = None
+        else:
+            self.name = name
+            self.category = self._category_prompt()
+            self.amount = self._get_amount()
+            self.mstar = self._morningstar_grid() 
+            self.composition = self._get_composition()
+            self.ticker = self._get_ticker()
+
+    def edit(self):
+        if self.category == "Investment":
+            menu = {}
+            menu['1'] = "Category"
+            menu['2'] = "Amount"
+            menu['3'] = "MorningStar"
+            menu['4'] = "Composition"
+            menu['5'] = "Ticker"
+        else:
+            menu = {}
+            menu['1'] = "Amount"
+    
+        options = menu.keys()
+        print("Select category of edit:")
+        for entry in options:
+            print(entry,menu[entry])
+
+        selection = input(f'>> ')
+
+        choice = menu[selection]
+
+        if choice == "Category":
+            self.category = self._category_prompt()
+        if choice == "Amount":
+            self.amount = self._get_amount()
+        if choice == "MorningStar":
+            self.mstar = self._morningstar_grid()
+        if choice == "Composition":
+            self.composition = self._get_composition()
+        if choice == "Ticker":
+            self.ticker = self._get_ticker()
 
     def _category_prompt(self):
         menu = {}
@@ -74,6 +113,10 @@ class Asset:
         else:
             return None
     
+    @property
+    def value(self):
+        return self._get_value()
+
     def _get_value(self):
         if (self.category != 'Investment'):
             value = self.amount
