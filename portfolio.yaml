@@ -1,12 +1,13 @@
-- amount: 423.0
-  category: Real Estate
+- amount: 1.0
+  category: Investment
   comp_type:
   - Cash
-  - Mid Cap
+  - Cash
   - Cash
   composition:
-  - 0.2
-  - 0.3
-  - 3.0
+  - 1.0
+  - 1.0
+  - 1.0
   name: LLL
+  retirement: false
   ticker: fls

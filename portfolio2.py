@@ -38,6 +38,7 @@ class Portfolio:
             x = Asset(...,load=True)
             x.name = asset['name'] 
             x.category = asset['category'] 
+            x.retirement = asset['retirement']
             x.amount = asset['amount'] 
             x.composition = asset['composition'] 
             x.comp_type = asset['comp_type']
@@ -62,7 +63,7 @@ class Portfolio:
                 print(dash)
                 print(f"SUMMARY OF {obj.name}")
                 print(dash)
-                print(f'Name: {obj.name}\nCategory: {obj.category}\nAmount: {obj.amount}\nDetail Category: {obj.detail}\nComposition: (c/b/s): {obj.composition}\nComposition Type: {obj.comp_type}\nTicker: {obj.ticker}\n')
+                print(f'Name: {obj.name}\nCategory: {obj.category}\nAmount: {obj.amount}\nComposition: (c/b/s): {obj.composition}\nComposition Type: {obj.comp_type}\nTicker: {obj.ticker}\nRetirement: {obj.retirement}\n')
 
 
     @property

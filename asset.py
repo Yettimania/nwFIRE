@@ -6,7 +6,7 @@ class Asset:
         if load:
             self.name = None
             self.category = None
-            self.detail = None
+            self.retirement = False
             self.amount = None
             self.composition = None
             self.comp_type = None
@@ -14,6 +14,7 @@ class Asset:
         else:
             self.name = name
             self.category = self._category_prompt()
+            self.retirement = self._get_retirement()
             self.amount = self._get_amount()
             self.composition = None 
             self.comp_type = None 
@@ -27,6 +28,7 @@ class Asset:
             menu['2'] = "Amount"
             menu['3'] = "Composition"
             menu['4'] = "Ticker"
+            menu['5'] = "Retirement"
         else:
             menu = {}
             menu['1'] = "Amount"
@@ -48,6 +50,8 @@ class Asset:
             self.composition = self._get_composition()
         if choice == "Ticker":
             self.ticker = self._get_ticker()
+        if choice == "Retirement":
+            self.retirement = self._get_retirement()
 
     def _category_prompt(self):
         menu = {}
@@ -117,6 +121,13 @@ class Asset:
             self.comp_type = [cash_type,bond_type,stock_type]
         else:
             return None
+
+    def _get_retirement(self):
+        value = input("Is this a retirement fund (y/n): ")
+        if value == 'y':
+            return True
+        else:
+            return False
     
     @property
     def value(self):
