@@ -44,12 +44,11 @@ class Portfolio:
             x.ticker = asset['ticker'] 
             self.assets.append(x)
 
-kyle = Portfolio()
-
-#kyle.add('BOA')
+#kyle = Portfolio()
+#kyle.add('LLL')
 #kyle.add('FLS')
-
+#
 #kyle.save()
-kyle.load()
-for obj in kyle.assets:
-    print(obj.__dict__)
+#kyle.load()
+#for obj in kyle.assets:
+#    print(obj.__dict__)

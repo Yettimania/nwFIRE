@@ -1,10 +1,13 @@
 - amount: 123.0
-  category: Cash
-  composition: null
-  mstar: null
-  name: BOA
-  ticker: null
-- amount: 123.0
+  category: Investment
+  composition:
+  - 0.1
+  - 0.1
+  - 0.1
+  mstar: Large Blend
+  name: LLL
+  ticker: FLS
+- amount: 23123.0
   category: Cash
   composition: null
   mstar: null
