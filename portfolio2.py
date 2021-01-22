@@ -39,8 +39,8 @@ class Portfolio:
             x.name = asset['name'] 
             x.category = asset['category'] 
             x.amount = asset['amount'] 
-            x.detail = asset['detail'] 
             x.composition = asset['composition'] 
+            x.comp_type = asset['comp_type']
             x.ticker = asset['ticker'] 
             self.assets.append(x)
 
@@ -53,14 +53,16 @@ class Portfolio:
             asset = obj.name
             category = obj.category
             amount = obj.amount
-            print('{:<10s}{:<15s}{:>1f}'.format(asset,category,amount))
+            print('{:<10s}{:<15s}{:>1f}\n'.format(asset,category,amount))
     
     def detail(self,name):
+        dash = '-' * 30
         for obj in self.assets:
             if obj.name == name:
-                print("SUMMARY OF ASSET:")
-                print(f'Name: {obj.name}\nCategory: {obj.category}\nAmount: {obj.amount}\n\
-Detail Category: {obj.detail}\nComposition: (c/b/s): {obj.composition}\nTicker: {obj.ticker}')
+                print(dash)
+                print(f"SUMMARY OF {obj.name}")
+                print(dash)
+                print(f'Name: {obj.name}\nCategory: {obj.category}\nAmount: {obj.amount}\nDetail Category: {obj.detail}\nComposition: (c/b/s): {obj.composition}\nComposition Type: {obj.comp_type}\nTicker: {obj.ticker}\n')
 
 
     @property
@@ -72,12 +74,11 @@ Detail Category: {obj.detail}\nComposition: (c/b/s): {obj.composition}\nTicker: 
 
 kyle = Portfolio()
 kyle.add('LLL')
-kyle.add('FLS')
-
+kyle.edit('LLL')
 kyle.save()
 kyle.load()
 kyle.summary()
-kyle.detail('FLS')
-print(kyle.asset_list)
+kyle.detail('LLL')
+#print(kyle.asset_list)
 #for obj in kyle.assets:
 #    print(obj.__dict__)

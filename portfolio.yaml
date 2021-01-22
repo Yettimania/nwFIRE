@@ -1,15 +1,12 @@
-- amount: 123.0
-  category: Investment
+- amount: 423.0
+  category: Real Estate
+  comp_type:
+  - Cash
+  - Mid Cap
+  - Cash
   composition:
-  - 0.1
-  - 0.1
-  - 0.1
-  detail: Blend
+  - 0.2
+  - 0.3
+  - 3.0
   name: LLL
-  ticker: FLS
-- amount: 10000.0
-  category: Owner Equity
-  composition: null
-  detail: null
-  name: FLS
-  ticker: null
+  ticker: fls

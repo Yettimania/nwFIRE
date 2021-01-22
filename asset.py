@@ -9,13 +9,15 @@ class Asset:
             self.detail = None
             self.amount = None
             self.composition = None
+            self.comp_type = None
             self.ticker = None
         else:
             self.name = name
             self.category = self._category_prompt()
-            self.detail = self._morningstar_grid()
             self.amount = self._get_amount()
-            self.composition = self._get_composition()
+            self.composition = None 
+            self.comp_type = None 
+            self._get_composition()
             self.ticker = self._get_ticker()
 
     def edit(self):
@@ -30,7 +32,7 @@ class Asset:
             menu['1'] = "Amount"
     
         options = menu.keys()
-        print("Select category of edit:")
+        print("Select attribute to edit:")
         for entry in options:
             print(entry,menu[entry])
 
@@ -55,7 +57,7 @@ class Asset:
         menu['4'] = "Owner Equity"
 
         options = menu.keys()
-        print("Select category of asset:")
+        print("Select category type for asset:")
         for entry in options:
             print(entry,menu[entry])
         
@@ -65,9 +67,9 @@ class Asset:
 
     def _get_amount(self):
         if self.category == 'Investment':
-            amount = float(input('Enter shares owned of asset: '))
+            amount = float(input('Enter qty of shares: '))
         else:
-            amount = float(input('Enter dollar amount of asset: '))
+            amount = float(input('Enter $ value of asset: '))
         return amount
 
     def _morningstar_grid(self):
@@ -86,7 +88,7 @@ class Asset:
             menu['11'] = 'Blend'
            
             options = menu.keys()
-            print("Select Mornging Star Category:")
+            print("Select Mornging Star category for asset:")
             for entry in options:
                 print(entry,menu[entry])
             
@@ -105,10 +107,14 @@ class Asset:
 
     def _get_composition(self):
         if self.category == 'Investment':
-            cash = float(input("Enter cash composition: "))
-            bonds = float(input("Enter bond composition: "))
-            stocks = float(input("Enter stock composition: "))
-            return [cash,bonds,stocks]
+            cash = float(input("Enter cash fraction (0-1): "))
+            cash_type = 'Cash'
+            bonds = float(input("Enter bond fraction (0-1): "))
+            bond_type = self._morningstar_grid()
+            stocks = float(input("Enter stock fraction (0-1): "))
+            stock_type = self._morningstar_grid()
+            self.composition = [cash,bonds,stocks]
+            self.comp_type = [cash_type,bond_type,stock_type]
         else:
             return None
     
