@@ -39,7 +39,7 @@ class Portfolio:
             x.name = asset['name'] 
             x.category = asset['category'] 
             x.amount = asset['amount'] 
-            x.mstar = asset['mstar'] 
+            x.detail = asset['detail'] 
             x.composition = asset['composition'] 
             x.ticker = asset['ticker'] 
             self.assets.append(x)
@@ -60,7 +60,7 @@ class Portfolio:
             if obj.name == name:
                 print("SUMMARY OF ASSET:")
                 print(f'Name: {obj.name}\nCategory: {obj.category}\nAmount: {obj.amount}\n\
-MStar: {obj.mstar}\nComposition: (c/b/s): {obj.composition}\nTicker: {obj.ticker}')
+Detail Category: {obj.detail}\nComposition: (c/b/s): {obj.composition}\nTicker: {obj.ticker}')
 
 
     @property
@@ -71,10 +71,10 @@ MStar: {obj.mstar}\nComposition: (c/b/s): {obj.composition}\nTicker: {obj.ticker
         return asset_list
 
 kyle = Portfolio()
-#kyle.add('LLL')
-#kyle.add('FLS')
-#
-#kyle.save()
+kyle.add('LLL')
+kyle.add('FLS')
+
+kyle.save()
 kyle.load()
 kyle.summary()
 kyle.detail('FLS')

@@ -6,15 +6,15 @@ class Asset:
         if load:
             self.name = None
             self.category = None
+            self.detail = None
             self.amount = None
-            self.mstar = None
             self.composition = None
             self.ticker = None
         else:
             self.name = name
             self.category = self._category_prompt()
+            self.detail = self._morningstar_grid()
             self.amount = self._get_amount()
-            self.mstar = self._morningstar_grid() 
             self.composition = self._get_composition()
             self.ticker = self._get_ticker()
 
@@ -23,9 +23,8 @@ class Asset:
             menu = {}
             menu['1'] = "Category"
             menu['2'] = "Amount"
-            menu['3'] = "MorningStar"
-            menu['4'] = "Composition"
-            menu['5'] = "Ticker"
+            menu['3'] = "Composition"
+            menu['4'] = "Ticker"
         else:
             menu = {}
             menu['1'] = "Amount"
@@ -43,8 +42,6 @@ class Asset:
             self.category = self._category_prompt()
         if choice == "Amount":
             self.amount = self._get_amount()
-        if choice == "MorningStar":
-            self.mstar = self._morningstar_grid()
         if choice == "Composition":
             self.composition = self._get_composition()
         if choice == "Ticker":
@@ -76,16 +73,18 @@ class Asset:
     def _morningstar_grid(self):
         if self.category == 'Investment':
             menu = {}
-            menu['1'] = 'Large Value'
-            menu['2'] = 'Large Blend'
-            menu['3'] = 'Large Growth'
-            menu['4'] = 'Medium Value'
-            menu['5'] = 'Medium Blend'
-            menu['6'] = 'Medium Growth'
-            menu['7'] = 'Small Value'
-            menu['8'] = 'Small Blend'
-            menu['9'] = 'Small Growth'
-            
+            menu['1'] = 'Cash'
+            menu['2'] = 'Short Bonds'
+            menu['3'] = 'Medium Bonds'
+            menu['4'] = 'Long Bonds'
+            menu['5'] = 'Large Blend'
+            menu['6'] = 'Large Growth'
+            menu['7'] = 'Large Value'
+            menu['8'] = 'Mid Cap'
+            menu['9'] = 'Small Cap'
+            menu['10'] = 'Ind Stock'
+            menu['11'] = 'Blend'
+           
             options = menu.keys()
             print("Select Mornging Star Category:")
             for entry in options:
@@ -118,7 +117,7 @@ class Asset:
         return self._get_value()
 
     def _get_value(self):
-        if (self.category != 'Investment'):
+        if self.category == 'Investment':
             value = self.amount
         else:
             tickerdata = yf.Ticker(self.ticker)

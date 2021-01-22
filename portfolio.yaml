@@ -4,12 +4,12 @@
   - 0.1
   - 0.1
   - 0.1
-  mstar: Large Blend
+  detail: Blend
   name: LLL
   ticker: FLS
-- amount: 23123.0
-  category: Cash
+- amount: 10000.0
+  category: Owner Equity
   composition: null
-  mstar: null
+  detail: null
   name: FLS
   ticker: null
