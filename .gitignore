@@ -1,4 +1,4 @@
-profile.yaml
-history.yaml
+*.yaml
 .python-version
+*.png
 __pycache__

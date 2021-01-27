@@ -82,7 +82,7 @@ def financial_breakdown(assets):
     print_asset(names[9],assets['Stocks'],assets['Stocks']/total_stocks,assets['Stocks']/total_financial)
     print(dash)
     print_asset('TOTAL STOCKS',total_stocks,total_stocks/total_stocks,total_stocks/total_financial)
-    print(dash)
+    print(dash+'\n')
 
     # TOTAL FINANCIAL ASSETS
     print('{:<16s}{:>10s}{:>10.2f}'.format('TOTAL FINANCIAL ASSETS','$',total_financial))
