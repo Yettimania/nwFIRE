@@ -1,3 +1,8 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import yaml
+from datetime import date
+
 def asset_dict():
      asset_dict = { 'Cash':0.0,
                     'Bonds':0.0,
@@ -26,14 +31,15 @@ def networth(assets):
     dash = '-' * 37
     print('\nTOTAL NETWORTH BREAKDOWN')
     print(dash)
-    print('{:<10s}{:>11s}{:>16s}'.format('ASSET','VALUE','PERCENTAGE'))
+    print('{:<10s}{:>14s}{:>16s}'.format('ASSET','VALUE','PERCENTAGE'))
     print(dash)
     
     for key,value in assets.items():
-        print('{:<15s}$ {:>8.2f}{:>10.2%}'.format(key,value,value/networth))
+        print('{:<15s}$ {:>12.2f}{:>10.2%}'.format(key,value,value/networth))
 
     print(dash)
     print('{:<15s}${:>9.2f}\n'.format('NETWORTH',networth))
+    return networth
     
 def financial_breakdown(assets):
     total_financial = sum(assets.values())
@@ -52,7 +58,7 @@ def financial_breakdown(assets):
     print("DETAILED FINANCIAL BREAKDOWN")
     # PRINT CASH ASSETS
     print(dash)
-    print('{:<10s}{:>14s}{:>15s}{:>10s}'.format('ASSET','VALUE','% CLASS','% TOTAL'))
+    print('{:<10s}{:>18s}{:>15s}{:>10s}'.format('ASSET','VALUE','% CLASS','% TOTAL'))
     print(dash)
     print_asset(names[0],total_cash,total_cash/total_cash,total_cash/total_financial)
     print(dash)
@@ -80,9 +86,74 @@ def financial_breakdown(assets):
 
     # TOTAL FINANCIAL ASSETS
     print('{:<16s}{:>10s}{:>10.2f}'.format('TOTAL FINANCIAL ASSETS','$',total_financial))
-    print('\n')
+
+    return total_financial
 
 def print_asset(name,value,class_percent,total_percent):
-    print('{:<16s}${:>8.2f}{:>14.2%}{:>10.2%}'.format(name,value,class_percent,total_percent))
+    print('{:<16s}${:>12.2f}{:>14.2%}{:>10.2%}'.format(name,value,class_percent,total_percent))
+
+def append_history(networth,financial_worth,fname='history.yaml'):
+
+    with open(fname) as f:
+        load_history = yaml.safe_load(f)
+
+    print(load_history)
+
+    today = date.today()
+    today = today.strftime("%m/%d/%Y")
+    load_history[today] = [networth,financial_worth]
+
+    print(load_history)
+
+    with open(fname,'w') as f:
+        data = yaml.dump(load_history,f)
+
+def pie_chart(asset_1,asset_2):
+    total_asset_1 = sum(asset_1.values())
+    total_asset_2 = sum(asset_2.values())
+
+    data_1 = []
+    data_2 = []
+
+    account_1 = [] 
+    account_2 = []
+
+    for key,value in asset_1.items():
+        if value==0:
+            next 
+        else:
+            account_1.append(key)
+            data_1.append(value)
+
+    for key,value in asset_2.items():
+        if value==0:
+            next
+        else:
+            account_2.append(key)
+            data_2.append(value)
+
+    fig,(ax1,ax2) = plt.subplots(1,2,figsize=(11,8.5),subplot_kw=dict(aspect="equal"))
+
+    def func(pct, sums):
+        absolute = int(pct/100.*sums)
+        return "{:.1f}%\n(${:d})".format(pct, absolute)
+
+    wedges1, texts1, autotexts1 = ax1.pie(data_1,labels=account_1,autopct=lambda pct:func(pct,total_asset_1))
+    wedges2, texts2, autotexts2 = ax2.pie(data_2,labels=account_2, autopct=lambda pct:func(pct,total_asset_2))
+
+    ax1.legend(wedges1, account_1,title="Networth",
+            loc="lower center",
+            bbox_to_anchor=(0,0,0.5,1))
+
+    ax2.legend(wedges2, account_2,title="Detailed Financials",
+            loc="lower center",
+            bbox_to_anchor=(1,0,0.5,1))
 
 
+#    plt.setp(autotexts1,size=8,weight="bold")
+#    plt.setp(autotexts2,size=8,weight="bold")
+
+    ax1.set_title("Networth Breakdown")
+    ax2.set_title("Detailed Financial")
+
+    #plt.savefig('mygraph.pdf')

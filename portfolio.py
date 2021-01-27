@@ -96,8 +96,12 @@ class Portfolio:
                 asset_sum['Stocks'] += stock_value 
                 detail_sum[obj.comp_type[2]] += stock_value
 
-        report.networth(asset_sum)
-        report.financial_breakdown(detail_sum)
+        networth = report.networth(asset_sum)
+        financial_worth = report.financial_breakdown(detail_sum)
+        response = input("Would you like to append history (y/n)? ")
+        if response=='y':
+            report.append_history(networth,financial_worth,fname='history.yaml')
+
 
     @property
     def asset_list(self):

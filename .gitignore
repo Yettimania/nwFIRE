@@ -1,3 +1,4 @@
-hello.py
-test
 profile.yaml
+history.yaml
+.python-version
+__pycache__
