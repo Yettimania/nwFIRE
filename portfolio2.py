@@ -65,6 +65,8 @@ class Portfolio:
                 print(dash)
                 print(f'Name: {obj.name}\nCategory: {obj.category}\nAmount: {obj.amount}\nComposition: (c/b/s): {obj.composition}\nComposition Type: {obj.comp_type}\nTicker: {obj.ticker}\nRetirement: {obj.retirement}\n')
 
+    def report(self):
+        return None
 
     @property
     def asset_list(self):
@@ -73,13 +75,13 @@ class Portfolio:
             asset_list.append(obj.name)
         return asset_list
 
-kyle = Portfolio()
-kyle.add('LLL')
-kyle.edit('LLL')
-kyle.save()
-kyle.load()
-kyle.summary()
-kyle.detail('LLL')
+#kyle = Portfolio()
+#kyle.add('LLL')
+#kyle.edit('LLL')
+#kyle.save()
+#kyle.load()
+#kyle.summary()
+#kyle.detail('LLL')
 #print(kyle.asset_list)
 #for obj in kyle.assets:
 #    print(obj.__dict__)

@@ -1,13 +1,33 @@
-- amount: 1.0
+- amount: 5000.0
+  category: Cash
+  comp_type: null
+  composition: null
+  name: LLL
+  retirement: false
+  ticker: null
+- amount: 50.0
   category: Investment
   comp_type:
   - Cash
-  - Cash
-  - Cash
+  - Long Bonds
+  - Large Value
   composition:
-  - 1.0
-  - 1.0
-  - 1.0
-  name: LLL
+  - 0.0
+  - 0.1
+  - 0.9
+  name: FLS
   retirement: false
-  ticker: fls
+  ticker: FLS
+- amount: 200.0
+  category: Investment
+  comp_type:
+  - Cash
+  - Short Bonds
+  - Large Growth
+  composition:
+  - 0.0
+  - 0.1
+  - 0.9
+  name: XXX
+  retirement: false
+  ticker: L3H

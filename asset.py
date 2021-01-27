@@ -131,7 +131,10 @@ class Asset:
     
     @property
     def value(self):
-        return self._get_value()
+        if self.category == 'Investment':
+            return self._get_value()
+        else:
+            return self.amount
 
     def _get_value(self):
         if self.category == 'Investment':
