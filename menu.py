@@ -3,14 +3,20 @@ import submenu
 
 portfolio = Portfolio()
 
+
+print("nwFIRE v0.1 - Tracking Your Independence")
+
+submenu.startup(portfolio)
+
 def print_menu():
     print(30 * "-" , "MENU" , 31 * "-")
     print("1. Create Portfolio")
     print("2. Load Portfolio")
     print("3. Edit Portfolio")
     print("4. Report Portfolio")
-    print("5. Forecast Portfolio")
-    print("6. Exit")
+    print("5. Plot networth history")
+    print("6. Forecast Portfolio")
+    print("7. Exit")
     print(67 * '-')
 
 loop = True
@@ -28,9 +34,10 @@ while loop:
     elif choice=='4':
         submenu.report_menu(portfolio)
     elif choice=='5':
-        print("Menu 5 has been selected")
+        submenu.history_menu(portfolio)
     elif choice=='6':
-        print("Menu 6 has been selected")
+        submenu.forecast_menu(portfolio)
+    elif choice=='7':
         loop=False
     else:
         input("Wrong option selection. Enter any key to try again..")

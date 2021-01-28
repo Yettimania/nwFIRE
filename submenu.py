@@ -1,3 +1,4 @@
+from analyze import History
 from os import listdir
 from os.path import splitext
 
@@ -21,7 +22,7 @@ def print_edit_menu():
 def create_menu(portfolio):
     while True:
         print_create_menu()
-        choice = input("Enter your choice [1-2]: ")
+        choice = input("Enter your choice [1-4]: ")
         if choice=='1':
             name = input("What is name of asset?: ").upper()
             portfolio.add(name)
@@ -39,6 +40,19 @@ def create_menu(portfolio):
         else:
             input("wrong Option selection. Enter any key to try again..")
 
+    if not listdir('./portfolios/'):
+        exit()
+
+
+def startup(portfolio):
+    profiles = listdir('./portfolios/')
+    if len(profiles)==0:
+        print("No porfiles found...creating profile...")
+        create_menu(portfolio)
+    else:
+        path = str('./portfolios/' + profiles[0])
+        portfolio.load(fname=path)
+        print("Default profile {}".format(profiles[0]))
 
 def load_menu(portfolio):
     profiles = listdir('./portfolios/')
@@ -88,3 +102,11 @@ def edit_menu(portfolio):
 
 def report_menu(portfolio):
     portfolio.report()
+
+def history_menu(portfolio):
+    history = History(fname=portfolio.history_path)
+    history.plot_history()
+
+def forecast_menu(portfolio):
+    history = History(fname=portfolio.history_path)
+    history.forecast()

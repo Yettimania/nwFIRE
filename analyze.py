@@ -1,10 +1,11 @@
+import subprocess 
 import yaml
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 from datetime import date
 
-class history():
+class History():
 
     def __init__(self,fname):
         with open(fname) as f:
@@ -40,8 +41,10 @@ class history():
         plt.tight_layout()
         today = date.today()
         fname = today.strftime("%m-%d-%Y")
-        fname = str(fname + '_history' + '.png')
+        fname = str('./historys/' + fname + 'history.png')
         plt.savefig(fname)
+
+        subprocess.call(('xdg-open',fname))
 
     def forecast(self):
         present_value = self.networth[-1]
@@ -54,7 +57,7 @@ class history():
         percent_7 = self._compound_interest(present_value,.07,age)
         percent_9 = self._compound_interest(present_value,.09,age)
 
-        dash = '-' * 56 
+        dash = '-' * 67
         print(dash)
         print('RATE OF RETURN FOR CURRENT NETWORTH')
         print(dash)
@@ -79,7 +82,7 @@ class history():
     def _print_return(self,value1,value2,value3,value4,value5):
         print('{:<6d}$ {:<12.0f}$ {:<12.0f}$ {:<12.0f}$ {:<12.0f}'.format(value1,value2,value3,value4,value5))
 
-history = history(fname='history.yaml')
-history.plot_history()
-history.forecast()
+#history = history(fname='history.yaml')
+#history.plot_history()
+#history.forecast()
 
