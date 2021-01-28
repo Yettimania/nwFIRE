@@ -29,7 +29,7 @@ def detailed_dict():
 def networth(assets):
     networth = sum(assets.values())
 
-    dash = '-' * 37
+    dash = '-' * 67
     print('\nTOTAL NETWORTH BREAKDOWN')
     print(dash)
     print('{:<10s}{:>14s}{:>16s}'.format('ASSET','VALUE','PERCENTAGE'))
@@ -53,7 +53,7 @@ def financial_breakdown(assets):
                    assets['Small Cap'] + \
                    assets['Stocks']
 
-    dash = '-' * 53 
+    dash = '-' * 67 
     names = list(assets.keys())
 
     print("DETAILED FINANCIAL BREAKDOWN")

@@ -6,14 +6,16 @@ class Portfolio:
    
     def __init__(self):
         self.assets = [] 
+        self.portfolio_path = None
+        self.history_path = None
 
     def add(self,name):
         self.assets.append(Asset(name))
 
     def drop(self,name):
-        for i,obj in enumerate(kyle.assets):
+        for i,obj in enumerate(self.assets):
             if obj.name == name:
-                kyle.assets.pop(i)
+                self.assets.pop(i)
                 exit 
 
     def edit(self,name):
@@ -24,15 +26,17 @@ class Portfolio:
 
     def save(self,fname='portfolio.yaml'):
         dict_list = []
-        for obj in kyle.assets:
+        for obj in self.assets:
             obj_dict = obj.__dict__
             dict_list.append(obj_dict)
         with open(fname,'w') as f:
-            data = yaml.dump(dict_list,f)
+            data = yaml.safe_dump(dict_list,f)
+        self.portfolio_path = fname
+        self.history_path = str('./historys/' + 'history.yaml') 
 
     def load(self,fname='portfolio.yaml'):
         with open(fname) as f:
-            assets = yaml.full_load(f)
+            assets = yaml.safe_load(f)
 
         self.assets = [] 
         for asset in assets:
@@ -46,8 +50,13 @@ class Portfolio:
             x.ticker = asset['ticker'] 
             self.assets.append(x)
 
+        self.portfolio_path = fname
+        self.history_path = str('./historys/' + 'history.yaml') 
+
     def summary(self):
-        dash = '-' * 30
+        dash = '-' * 67 
+        print(dash)
+        print("PORTFOLIO SUMMARY")
         print(dash)
         print('{:<10s}{:>4s}{:>12s}'.format('ASSET','CATEGORY','AMOUNT'))
         print(dash)
@@ -100,7 +109,7 @@ class Portfolio:
         financial_worth = report.financial_breakdown(detail_sum)
         response = input("Would you like to append history (y/n)? ")
         if response=='y':
-            report.append_history(networth,financial_worth,fname='history.yaml')
+            report.append_history(networth,financial_worth,fname=self.history_path)
 
 
     @property
@@ -109,15 +118,3 @@ class Portfolio:
         for obj in self.assets:
             asset_list.append(obj.name)
         return asset_list
-
-kyle = Portfolio()
-#kyle.add('LLL')
-#kyle.add('FLS')
-#kyle.add('XXX')
-#kyle.save()
-kyle.load()
-kyle.report()
-#kyle.detail('LLL')
-#print(kyle.asset_list)
-#for obj in kyle.assets:
-#    print(obj.__dict__)

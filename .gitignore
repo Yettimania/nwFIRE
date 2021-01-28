@@ -2,3 +2,6 @@
 .python-version
 *.png
 __pycache__
+portfolios/
+history/
+

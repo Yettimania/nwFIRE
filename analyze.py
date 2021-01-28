@@ -21,7 +21,7 @@ class history():
 
     def plot_history(self):
         fig,ax = plt.subplots()
-        formatter = ticker.FormatStrFormatter('$%1.2f')
+        formatter = ticker.FormatStrFormatter('$%1.0f')
         ax.yaxis.set_major_formatter(formatter)
         ax.plot(self.dates,self.networth,color='r')
         ax.plot(self.dates,self.financial_networth,color='b')
@@ -31,7 +31,7 @@ class history():
 
         for x,y in zip(self.dates,self.networth):
             
-            label = "${:.2f}".format(y)
+            label = "${:.0f}".format(y)
 
             plt.annotate(label,(x,y),textcoords="offset points",xytext=(0,10),fontsize='x-small',ha='center')
 
@@ -80,5 +80,6 @@ class history():
         print('{:<6d}$ {:<12.0f}$ {:<12.0f}$ {:<12.0f}$ {:<12.0f}'.format(value1,value2,value3,value4,value5))
 
 history = history(fname='history.yaml')
+history.plot_history()
 history.forecast()
 

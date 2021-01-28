@@ -34,11 +34,11 @@ class Asset:
             menu['1'] = "Amount"
     
         options = menu.keys()
-        print("Select attribute to edit:")
+        print("EDIT ATTRIBUTE")
         for entry in options:
             print(entry,menu[entry])
 
-        selection = input(f'>> ')
+        selection = input('Select Attribute to Edit: ')
 
         choice = menu[selection]
 
@@ -61,19 +61,37 @@ class Asset:
         menu['4'] = "Owner Equity"
 
         options = menu.keys()
-        print("Select category type for asset:")
+        print("ASSET CATEGORIES")
         for entry in options:
             print(entry,menu[entry])
         
-        selection = input(f'>> ')
+        while True:
+            selection = input("Select Asset Category: ")
+            if selection in menu.keys():
+                break 
+            else:
+                print('Select option in the menu.')
+                continue
 
         return menu[selection]
 
     def _get_amount(self):
         if self.category == 'Investment':
-            amount = float(input('Enter qty of shares: '))
+            while True:
+                try:
+                    amount = float(input('Enter qty of shares: '))
+                except ValueError:
+                    print("Needs to be numeric value...")
+                else:
+                    break
         else:
-            amount = float(input('Enter $ value of asset: '))
+            while True:
+                try:
+                    amount = float(input('Enter $ value of asset: '))
+                except ValueError:
+                    print("Needs to be numeric value...")
+                else:
+                    break
         return amount
 
     def _morningstar_grid(self):
@@ -92,11 +110,17 @@ class Asset:
             menu['11'] = 'Blend'
            
             options = menu.keys()
-            print("Select Mornging Star category for asset:")
+            print("MORNING STAR CATEGORIES")
             for entry in options:
                 print(entry,menu[entry])
-            
-            selection = input(">> ")
+
+            while True:
+                selection = input("Select Morning Star Category: ")
+                if selection in menu.keys():
+                    break 
+                else:
+                    print('Select option in the menu.')
+                    continue
 
             return menu[selection] 
         else:
@@ -104,18 +128,36 @@ class Asset:
 
     def _get_ticker(self):
         if self.category == 'Investment':
-            ticker = input("Enter asset ticker: ")
+            ticker = input("Enter asset ticker: ").upper()
             return ticker
         else:
             return None
 
     def _get_composition(self):
         if self.category == 'Investment':
-            cash = float(input("Enter cash fraction (0-1): "))
+            while True:
+                try:
+                    cash = float(input('Enter cash fraction [0-1]: '))
+                except ValueError:
+                    print("Needs to be numeric value...")
+                else:
+                    break
             cash_type = 'Cash'
-            bonds = float(input("Enter bond fraction (0-1): "))
+            while True:
+                try:
+                    bonds = float(input('Enter bonds fraction [0-1]: '))
+                except ValueError:
+                    print("Needs to be numeric value...")
+                else:
+                    break
             bond_type = self._morningstar_grid()
-            stocks = float(input("Enter stock fraction (0-1): "))
+            while True:
+                try:
+                    stocks = float(input('Enter stocks fraction [0-1]: '))
+                except ValueError:
+                    print("Needs to be numeric value...")
+                else:
+                    break
             stock_type = self._morningstar_grid()
             self.composition = [cash,bonds,stocks]
             self.comp_type = [cash_type,bond_type,stock_type]
