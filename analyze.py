@@ -41,7 +41,7 @@ class History():
         plt.tight_layout()
         today = date.today()
         fname = today.strftime("%m-%d-%Y")
-        fname = str('./historys/' + fname + 'history.png')
+        fname = str('./historys/' + fname + '_history.png')
         plt.savefig(fname)
 
         subprocess.call(('xdg-open',fname))
@@ -81,8 +81,4 @@ class History():
 
     def _print_return(self,value1,value2,value3,value4,value5):
         print('{:<6d}$ {:<12.0f}$ {:<12.0f}$ {:<12.0f}$ {:<12.0f}'.format(value1,value2,value3,value4,value5))
-
-#history = history(fname='history.yaml')
-#history.plot_history()
-#history.forecast()
 

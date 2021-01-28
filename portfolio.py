@@ -25,17 +25,21 @@ class Portfolio:
                 exit 
 
     def save(self,fname='portfolio.yaml'):
+        if self.portfolio_path == None:
+            portfolio_path = str('./portfolios/' + fname + '.yaml')
+            history_path = str('./historys/' + fname + '.yaml')
+        else:
+            file_path = self.portfolio_path
         dict_list = []
         for obj in self.assets:
             obj_dict = obj.__dict__
             dict_list.append(obj_dict)
-        with open(fname,'w') as f:
+        with open(file_path,'w') as f:
             data = yaml.safe_dump(dict_list,f)
-        self.portfolio_path = fname
-        self.history_path = str('./historys/' + 'history.yaml') 
 
     def load(self,fname='portfolio.yaml'):
-        with open(fname) as f:
+        file_path = str('./portfolios/' + fname)
+        with open(file_path) as f:
             assets = yaml.safe_load(f)
 
         self.assets = [] 
@@ -50,8 +54,8 @@ class Portfolio:
             x.ticker = asset['ticker'] 
             self.assets.append(x)
 
-        self.portfolio_path = fname
-        self.history_path = str('./historys/' + 'history.yaml') 
+        self.portfolio_path = str('./portfolios/' + fname)
+        self.history_path = str('./historys/' + fname)
 
     def summary(self):
         dash = '-' * 67 

@@ -61,29 +61,32 @@ def financial_breakdown(assets):
     print(dash)
     print('{:<10s}{:>18s}{:>15s}{:>10s}'.format('ASSET','VALUE','% CLASS','% TOTAL'))
     print(dash)
-    print_asset(names[0],total_cash,total_cash/total_cash,total_cash/total_financial)
-    print(dash)
-    print_asset('TOTAL CASH',total_cash,total_cash/total_cash,total_cash/total_financial)
-    print(dash + '\n')
+    if total_cash != 0:
+        print_asset(names[0],total_cash,total_cash/total_cash,total_cash/total_financial)
+        print(dash)
+        print_asset('TOTAL CASH',total_cash,total_cash/total_cash,total_cash/total_financial)
+        print(dash + '\n')
 
     # PRINT BOND ASSETS
-    print_asset(names[1],assets['Short Bonds'],assets['Short Bonds']/total_bonds,assets['Short Bonds']/total_financial)
-    print_asset(names[2],assets['Medium Bonds'],assets['Medium Bonds']/total_bonds,assets['Medium Bonds']/total_financial)
-    print_asset(names[3],assets['Long Bonds'],assets['Long Bonds']/total_bonds,assets['Long Bonds']/total_financial)
-    print(dash)
-    print_asset('TOTAL BONDS',total_bonds,total_bonds/total_bonds,total_bonds/total_financial)
-    print(dash + '\n')
+    if total_bonds != 0:
+        print_asset(names[1],assets['Short Bonds'],assets['Short Bonds']/total_bonds,assets['Short Bonds']/total_financial)
+        print_asset(names[2],assets['Medium Bonds'],assets['Medium Bonds']/total_bonds,assets['Medium Bonds']/total_financial)
+        print_asset(names[3],assets['Long Bonds'],assets['Long Bonds']/total_bonds,assets['Long Bonds']/total_financial)
+        print(dash)
+        print_asset('TOTAL BONDS',total_bonds,total_bonds/total_bonds,total_bonds/total_financial)
+        print(dash + '\n')
 
     # PRINT STOCK DETAILS
-    print_asset(names[4],assets['Large Value'],assets['Large Value']/total_stocks,assets['Large Value']/total_financial)
-    print_asset(names[5],assets['Large Blend'],assets['Large Blend']/total_stocks,assets['Large Blend']/total_financial)
-    print_asset(names[6],assets['Large Growth'],assets['Large Growth']/total_stocks,assets['Large Growth']/total_financial)
-    print_asset(names[7],assets['Mid Cap'],assets['Mid Cap']/total_stocks,assets['Mid Cap']/total_financial)
-    print_asset(names[8],assets['Small Cap'],assets['Small Cap']/total_stocks,assets['Small Cap']/total_financial)
-    print_asset(names[9],assets['Stocks'],assets['Stocks']/total_stocks,assets['Stocks']/total_financial)
-    print(dash)
-    print_asset('TOTAL STOCKS',total_stocks,total_stocks/total_stocks,total_stocks/total_financial)
-    print(dash+'\n')
+    if total_stocks != 0:
+        print_asset(names[4],assets['Large Value'],assets['Large Value']/total_stocks,assets['Large Value']/total_financial)
+        print_asset(names[5],assets['Large Blend'],assets['Large Blend']/total_stocks,assets['Large Blend']/total_financial)
+        print_asset(names[6],assets['Large Growth'],assets['Large Growth']/total_stocks,assets['Large Growth']/total_financial)
+        print_asset(names[7],assets['Mid Cap'],assets['Mid Cap']/total_stocks,assets['Mid Cap']/total_financial)
+        print_asset(names[8],assets['Small Cap'],assets['Small Cap']/total_stocks,assets['Small Cap']/total_financial)
+        print_asset(names[9],assets['Stocks'],assets['Stocks']/total_stocks,assets['Stocks']/total_financial)
+        print(dash)
+        print_asset('TOTAL STOCKS',total_stocks,total_stocks/total_stocks,total_stocks/total_financial)
+        print(dash+'\n')
 
     # TOTAL FINANCIAL ASSETS
     print('{:<16s}{:>10s}{:>10.2f}'.format('TOTAL FINANCIAL ASSETS','$',total_financial))

@@ -1,6 +1,6 @@
 from analyze import History
 from os import listdir
-from os.path import splitext
+from os.path import splitext,exists
 
 def print_create_menu():
     print(27*'-', 'CREATE MENU', 27*'-')
@@ -34,8 +34,6 @@ def create_menu(portfolio):
                 exit()
             else:
                 name = input("Enter portfolio name: ")
-                name = str('./portfolios/' + name + '.yaml')
-                print(name)
                 portfolio.save(fname=name)
                 break
         elif choice=='4':
@@ -53,8 +51,7 @@ def startup(portfolio):
         print("No portfolios found...creating portfolio...")
         create_menu(portfolio)
     else:
-        path = str('./portfolios/' + profiles[0])
-        portfolio.load(fname=path)
+        portfolio.load(fname=profiles[0])
         print("Default profile {}".format(profiles[0]))
 
 def load_menu(portfolio):
@@ -67,9 +64,8 @@ def load_menu(portfolio):
         print('{}. {}'.format(idx+1,profile))
     selection = int(input("Select profile to load: "))
     profile = fnames[selection-1]
-    path = str('./portfolios/' + profile + '.yaml')
-
-    portfolio.load(fname=path)
+    profile = str(profile + '.yaml')
+    portfolio.load(fname=profile)
     portfolio.summary()
     print("Portfolio loaded!")
 
@@ -97,7 +93,7 @@ def edit_menu(portfolio):
         elif choice=='4':
             portfolio.summary()
         elif choice=='5':
-            portfolio.save(portfolio.path)
+            portfolio.save(portfolio.portfolio_path)
             break
         else:
             input("Wrong Option selection. Enter any key to try again..")
@@ -107,9 +103,15 @@ def report_menu(portfolio):
     portfolio.report()
 
 def history_menu(portfolio):
-    history = History(fname=portfolio.history_path)
-    history.plot_history()
+    if exists(portfolio.history_path):
+        history = History(fname=portfolio.history_path)
+        history.plot_history()
+    else:
+        print("No history file for this profile.\n")
 
 def forecast_menu(portfolio):
-    history = History(fname=portfolio.history_path)
-    history.forecast()
+    if exists(portfolio.history_path):
+        history = History(fname=portfolio.history_path)
+        history.forecast()
+    else:
+        print("No historical data to forecast.\n")
