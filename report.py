@@ -1,4 +1,5 @@
 import numpy as np
+from os import path
 import matplotlib.pyplot as plt
 import yaml
 from datetime import date
@@ -94,19 +95,23 @@ def print_asset(name,value,class_percent,total_percent):
 
 def append_history(networth,financial_worth,fname='history.yaml'):
 
-    with open(fname) as f:
-        load_history = yaml.safe_load(f)
-
-    print(load_history)
-
     today = date.today()
     today = today.strftime("%m/%d/%Y")
-    load_history[today] = [networth,financial_worth]
 
-    print(load_history)
+    if path.exists(fname):
+
+        with open(fname) as f:
+            load_history = yaml.safe_load(f)
+
+        load_history[today] = [networth,financial_worth]
+
+    else:
+        load_history = {}
+        load_history[today] = [networth,financial_worth]
 
     with open(fname,'w') as f:
         data = yaml.dump(load_history,f)
+
 
 def pie_chart(asset_1,asset_2):
     total_asset_1 = sum(asset_1.values())
