@@ -29,12 +29,15 @@ def create_menu(portfolio):
         elif choice=='2':
             portfolio.summary()
         elif choice=='3':
-            name = input("Enter portfolio name: ")
-            name = str('./portfolios/' + name + '.yaml')
-            print(name)
-            portfolio.save(fname=name)
-            print("Return to main menu")
-            break
+            if len(portfolio.assets) == 0:
+                print("No assets added. Exiting program")
+                exit()
+            else:
+                name = input("Enter portfolio name: ")
+                name = str('./portfolios/' + name + '.yaml')
+                print(name)
+                portfolio.save(fname=name)
+                break
         elif choice=='4':
             break
         else:
@@ -47,7 +50,7 @@ def create_menu(portfolio):
 def startup(portfolio):
     profiles = listdir('./portfolios/')
     if len(profiles)==0:
-        print("No porfiles found...creating profile...")
+        print("No portfolios found...creating portfolio...")
         create_menu(portfolio)
     else:
         path = str('./portfolios/' + profiles[0])
