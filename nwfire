@@ -1,3 +1,2 @@
 #!/bin/bash
-
-python menu.py
+python nwfire.py
