@@ -23,7 +23,8 @@ def detailed_dict():
                      'Large Growth': 0.0,
                      'Mid Cap': 0.0,
                      'Small Cap': 0.0,
-                     'Stocks':0.0 }
+                     'Ind Stock':0.0,
+                     'Blend':0.0}
     return detailed_dict
 
 def networth(assets):
@@ -51,7 +52,8 @@ def financial_breakdown(assets):
                    assets['Large Growth'] + \
                    assets['Mid Cap'] + \
                    assets['Small Cap'] + \
-                   assets['Stocks']
+                   assets['Ind Stock'] + \
+                   assets['Blend']
 
     dash = '-' * 67 
     names = list(assets.keys())
@@ -83,7 +85,8 @@ def financial_breakdown(assets):
         print_asset(names[6],assets['Large Growth'],assets['Large Growth']/total_stocks,assets['Large Growth']/total_financial)
         print_asset(names[7],assets['Mid Cap'],assets['Mid Cap']/total_stocks,assets['Mid Cap']/total_financial)
         print_asset(names[8],assets['Small Cap'],assets['Small Cap']/total_stocks,assets['Small Cap']/total_financial)
-        print_asset(names[9],assets['Stocks'],assets['Stocks']/total_stocks,assets['Stocks']/total_financial)
+        print_asset(names[9],assets['Ind Stock'],assets['Ind Stock']/total_stocks,assets['Ind Stock']/total_financial)
+        print_asset(names[10],assets['Blend'],assets['Blend']/total_stocks,assets['Blend']/total_financial)
         print(dash)
         print_asset('TOTAL STOCKS',total_stocks,total_stocks/total_stocks,total_stocks/total_financial)
         print(dash+'\n')

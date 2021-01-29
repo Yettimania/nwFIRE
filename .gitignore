@@ -1,4 +1,5 @@
 *.yaml
+test.py
 .python-version
 *.png
 __pycache__

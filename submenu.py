@@ -15,8 +15,9 @@ def print_edit_menu():
     print('1. Add Asset')
     print('2. Drop Asset')
     print('3. Edit Asset')
-    print('4. Summarize Portfolio')
-    print('5. Exit & Save')
+    print('4. Asset Details')
+    print('5. Summarize Portfolio')
+    print('6. Exit & Save')
     print(67*'-')
 
 def create_menu(portfolio):
@@ -72,7 +73,7 @@ def load_menu(portfolio):
 def edit_menu(portfolio):
     while True:
         print_edit_menu()
-        choice = input("Enter your choice [1-4]: ")
+        choice = input("Enter your choice [1-6]: ")
         if choice=='1':
             name = input("What is name of asset?: ").upper()
             portfolio.add(name)
@@ -91,8 +92,15 @@ def edit_menu(portfolio):
             name = input("What is name of asset to edit?: ").upper()
             portfolio.edit(name)
         elif choice=='4':
-            portfolio.summary()
+            asset_list = portfolio.asset_list
+            print("ASSET LIST")
+            for asset in asset_list:
+                print("- {}".format(asset))
+            name = input("Detail which asset?: ").upper()
+            portfolio.detail(name)
         elif choice=='5':
+            portfolio.summary()
+        elif choice=='6':
             portfolio.save(portfolio.portfolio_path)
             break
         else:

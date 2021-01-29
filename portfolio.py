@@ -85,6 +85,8 @@ class Portfolio:
         detail_sum = report.detailed_dict()
 
         for obj in self.assets:
+            print(obj.name)
+            print(obj.value)
             if obj.category == 'Cash':
                 asset_sum['Cash'] += obj.amount
                 detail_sum['Cash'] += obj.amount
@@ -97,18 +99,22 @@ class Portfolio:
                 bond_value = 0.0
                 stock_value = 0.0
 
-                total_value = obj.amount * obj.value
+                total_value = obj.value
+
                 cash_value = total_value * obj.composition[0]
-                asset_sum['Cash'] += cash_value
-                detail_sum[obj.comp_type[0]] += cash_value
+                if obj.comp_type[0] != None:
+                    asset_sum['Cash'] += cash_value
+                    detail_sum[obj.comp_type[0]] += cash_value
 
                 bond_value = total_value * obj.composition[1]
-                asset_sum['Bonds'] += bond_value
-                detail_sum[obj.comp_type[1]] += bond_value
+                if obj.comp_type[1] != None:
+                    asset_sum['Bonds'] += bond_value
+                    detail_sum[obj.comp_type[1]] += bond_value
 
                 stock_value += total_value * obj.composition[2]
-                asset_sum['Stocks'] += stock_value 
-                detail_sum[obj.comp_type[2]] += stock_value
+                if obj.comp_type[2] != None:
+                    asset_sum['Stocks'] += stock_value 
+                    detail_sum[obj.comp_type[2]] += stock_value
 
         networth = report.networth(asset_sum)
         financial_worth = report.financial_breakdown(detail_sum)

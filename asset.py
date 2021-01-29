@@ -1,4 +1,4 @@
-import yfinance as yf
+from yahoofinancials import YahooFinancials
 
 class Asset:
 
@@ -185,10 +185,7 @@ class Asset:
             return self.amount
 
     def _get_value(self):
-        if self.category == 'Investment':
-            value = self.amount
-        else:
-            tickerdata = yf.Ticker(self.ticker)
-            prevclose = tickerdata.info['previousClose']
-            value = self.amount* prevclose
+        tickerdata = YahooFinancials(self.ticker)
+        prevclose = tickerdata.get_prev_close_price()
+        value = self.amount* prevclose
         return float(value)
