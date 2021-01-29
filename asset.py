@@ -36,7 +36,7 @@ class Asset:
         options = menu.keys()
         print("EDIT ATTRIBUTE")
         for entry in options:
-            print(entry,menu[entry])
+            print("{}. {}".format(entry,menu[entry]))
 
         selection = input('Select Attribute to Edit: ')
 
@@ -63,7 +63,7 @@ class Asset:
         options = menu.keys()
         print("ASSET CATEGORIES")
         for entry in options:
-            print(entry,menu[entry])
+            print("{}. {}".format(entry,menu[entry]))
         
         while True:
             selection = input("Select Asset Category: ")
@@ -112,7 +112,7 @@ class Asset:
             options = menu.keys()
             print("MORNING STAR CATEGORIES")
             for entry in options:
-                print(entry,menu[entry])
+                print("{}. {}".format(entry,menu[entry]))
 
             while True:
                 selection = input("Select Morning Star Category: ")
@@ -150,7 +150,10 @@ class Asset:
                     print("Needs to be numeric value...")
                 else:
                     break
-            bond_type = self._morningstar_grid()
+            if bonds != 0:
+                bond_type = self._morningstar_grid()
+            else:
+                bond_type = None
             while True:
                 try:
                     stocks = float(input('Enter stocks fraction [0-1]: '))
@@ -158,7 +161,10 @@ class Asset:
                     print("Needs to be numeric value...")
                 else:
                     break
-            stock_type = self._morningstar_grid()
+            if stocks != 0:
+                stock_type = self._morningstar_grid()
+            else:
+                stock_type = None
             self.composition = [cash,bonds,stocks]
             self.comp_type = [cash_type,bond_type,stock_type]
         else:

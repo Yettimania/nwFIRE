@@ -26,8 +26,9 @@ class Portfolio:
 
     def save(self,fname='portfolio.yaml'):
         if self.portfolio_path == None:
-            portfolio_path = str('./portfolios/' + fname + '.yaml')
-            history_path = str('./historys/' + fname + '.yaml')
+            self.portfolio_path = str('./portfolios/' + fname + '.yaml')
+            self.history_path = str('./historys/' + fname + '.yaml')
+            file_path = self.portfolio_path
         else:
             file_path = self.portfolio_path
         dict_list = []
