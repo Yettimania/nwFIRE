@@ -1,6 +1,7 @@
 from asset import Asset
 import report
 import yaml
+from multi import investment_pull
 
 class Portfolio:
    
@@ -84,9 +85,16 @@ class Portfolio:
         asset_sum = report.asset_dict()
         detail_sum = report.detailed_dict()
 
+        investments = []
+
         for obj in self.assets:
-            print(obj.name)
-            print(obj.value)
+            if obj.category == "Investment":
+                investments.append(obj.ticker)
+
+        print('Obtaining current stock prices...')
+        stock_price = investment_pull(investments)
+
+        for obj in self.assets:
             if obj.category == 'Cash':
                 asset_sum['Cash'] += obj.amount
                 detail_sum['Cash'] += obj.amount
@@ -99,7 +107,9 @@ class Portfolio:
                 bond_value = 0.0
                 stock_value = 0.0
 
-                total_value = obj.value
+                current_price = stock_price[obj.name]
+
+                total_value = obj.amount * current_price
 
                 cash_value = total_value * obj.composition[0]
                 if obj.comp_type[0] != None:

@@ -1,5 +1,3 @@
-from yahoofinancials import YahooFinancials
-
 class Asset:
 
     def __init__(self,name,load=False):
@@ -176,16 +174,3 @@ class Asset:
             return True
         else:
             return False
-    
-    @property
-    def value(self):
-        if self.category == 'Investment':
-            return self._get_value()
-        else:
-            return self.amount
-
-    def _get_value(self):
-        tickerdata = YahooFinancials(self.ticker)
-        prevclose = tickerdata.get_prev_close_price()
-        value = self.amount* prevclose
-        return float(value)

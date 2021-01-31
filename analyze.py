@@ -3,7 +3,7 @@ import yaml
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
-from datetime import date
+from datetime import date,datetime
 
 class History():
 
@@ -14,11 +14,14 @@ class History():
         self.dates = []
         self.networth = []
         self.financial_networth = []
-        
-        for key,value in history.items():
-            self.dates.append(key)
-            self.networth.append(value[0])
-            self.financial_networth.append(value[1])
+
+        history_dates = list(history.keys())
+        history_dates.sort(key = lambda date: datetime.strptime(date, '%m/%d/%Y')) 
+
+        for item in history_dates:
+            self.dates.append(item)
+            self.networth.append(history[item][0])
+            self.financial_networth.append(history[item][1])
 
     def plot_history(self):
         fig,ax = plt.subplots()
