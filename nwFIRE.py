@@ -2,6 +2,8 @@ import click
 from nwfire.portfolio import Portfolio
 
 
+portfolio = Portfolio('KyleLindsay')
+
 @click.group()
 def cli():
     pass
@@ -12,7 +14,8 @@ def add():
     Add asset to specific portfolio
     """
     print('ADD COMMAND')
-    portfolio = Portfolio('KyleLindsay')
+    # portfolio = Portfolio('KyleLindsay')
+    portfolio.add_asset()
 
 
 @cli.command()
@@ -21,6 +24,8 @@ def delete():
     Delete asset from specific portfolio
     """
     print('DELETE COMMAND')
+    if not portfolio.exist:
+        print("Portfolio does not exist. Can't delete.")
 
 
 @cli.command()

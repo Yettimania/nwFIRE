@@ -6,23 +6,13 @@ class Portfolio:
         self.name = portfolioName
         self.path = f'/data/{self.name}.pkl'
         self.exist = path.exists(self.path)
-        if self.exist == False:
-            response = input('Portfolio does not exist.'
-                    ' Would you like to create {} [y/n]? '
-                    .format(self.name))
-            if response == 'y':
-                pass
-            elif response == 'n':
-                print('Portfolio not created.')
-                exit
-            else:
-                print('Response note recognized. Exiting program.')
 
     def add_asset(self):
-        None
+        self._prompt_existence()
+        print("Adding asset.")
 
     def delete_asset(self):
-        None
+        print("Deleting asset.")
 
     def edit_asset(self):
         None
@@ -38,3 +28,18 @@ class Portfolio:
 
     def update_market_value(self):
         None
+
+    def _prompt_existence(self):
+        if self.exist == False:
+            response = input('Portfolio does not exist.'
+                    ' Would you like to create {} [y/n]? '
+                    .format(self.name))
+            if response == 'y':
+                pass
+            elif response == 'n':
+                print('Portfolio not created.')
+                exit()
+            else:
+                print('Response note recognized. Exiting program.')
+
+
