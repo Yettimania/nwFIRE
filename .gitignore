@@ -3,6 +3,4 @@ test.py
 .python-version
 *.png
 __pycache__
-portfolios/
-historys/
 

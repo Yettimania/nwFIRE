@@ -1,20 +1,12 @@
 import click
-from utils.helloWorld import helloWorld
-from utils.fetchStock import investment_pull
+from nwfire.portfolio import Portfolio
+
+portfolio = Portfolio('name')
+
 
 @click.group()
 def cli():
     pass
-
-
-@cli.command()
-def create():
-    """
-    Create new portfolio
-    """
-    print('CREATE COMMAND')
-    investment_pull(['TWST','FLS','L3H'])
-
 
 @cli.command()
 def add():
