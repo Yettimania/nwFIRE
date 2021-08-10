@@ -1,8 +1,6 @@
 import click
 from nwfire.portfolio import Portfolio
 
-portfolio = Portfolio('name')
-
 
 @click.group()
 def cli():
@@ -14,6 +12,7 @@ def add():
     Add asset to specific portfolio
     """
     print('ADD COMMAND')
+    portfolio = Portfolio('KyleLindsay')
 
 
 @cli.command()

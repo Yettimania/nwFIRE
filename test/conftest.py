@@ -5,7 +5,12 @@ from nwfire.assets.stock import Stock
 from nwfire.assets.equity import Equity
 from nwfire.assets.realEstate import RealEstate
 from nwfire.assets.fund import Fund
+from nwfire.portfolio import Portfolio
 
+
+@pytest.fixture
+def portolio_class():
+    return Portfolio('testPortfolio')
 
 @pytest.fixture
 def asset_class():
