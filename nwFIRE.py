@@ -31,13 +31,21 @@ def add(ctx, asset_type):
 
 
 @cli.command()
-def delete():
+@click.pass_context
+@click.argument('asset_key')
+def delete(ctx, asset_key):
     """
     Delete asset from specific portfolio
     """
-    print('DELETE COMMAND')
-    if not portfolio.exist:
+    portfolio_name = ctx.obj['PORTFOLIO']
+    pkl_path = f'./data/{portfolio_name}.pkl'
+    if path.exists(pkl_path):
+        portfolio = load_portfolio(pkl_path)
+        portfolio.delete_asset(asset_key)
+        save_portfolio(portfolio)
+    else:
         print("Portfolio does not exist. Can't delete.")
+
 
 
 @cli.command()

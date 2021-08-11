@@ -50,18 +50,22 @@ class Portfolio:
             except ValueError:
                 print('Amount must be an integer or float.')
                 exit()
-            self.assets[name] = RealEstate(amount)
+            self.assets[name] = Equity(amount)
         elif asset_type.upper() == 'FUND':
             print('Adding funds to portfolio...')
             try:
                 name = str(input("Funds Ticker: ")).upper()
                 num_shares = float(input("Number of Shares: "))
-                # TODO FIX READING IN THE ARRAY
                 composition = input("Enter [CASH,BONDS,STOCK] Ratio: ").split(' ')
-                composition = [int(num) for num in composition]
+                composition = [float(num) for num in composition]
+                total = sum(composition)
+                if total != 1.0:
+                    print('Composition of asset must equal 1.0')
+                    exit()
                 composition_type = str(input("Enter fund category: "))
             except ValueError:
-                print('Amount must be an integer or float.')
+                print('Value Error: Amount must be an integer or float. \
+                        composition must be ratios that add to 1.')
                 exit()
             self.assets[name] = Fund(num_shares, name,
                     composition, composition_type)
@@ -70,8 +74,14 @@ class Portfolio:
                     CASH, STOCK, EQUITY, REALESTATE, FUND.')
         print('Asset has been added to portfolio.')
 
-    def delete_asset(self):
-        print("Deleting asset.")
+    def delete_asset(self, asset_key):
+        print("Deleting asset from portfolio.")
+        try:
+            del self.assets[asset_key]
+        except:
+            print('Unable to delete asset from portoflio.')
+            print('Confirm argument passed in is correct.')
+
 
     def edit_asset(self):
         None

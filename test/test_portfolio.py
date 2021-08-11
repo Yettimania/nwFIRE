@@ -27,10 +27,12 @@ def test_portfolio_not_exist(portolio_class):
     portfolio = portolio_class
     assert(portfolio.exist == False)
 
-def test_portfolio_load_append():
-    portfolio = load_portfolio('./test/test_portfolio.pkl')
+def test_portfolio_add(testPortfolio):
     # SET TO TRUE FOR TEST ONLY
-    print('\n---MANUAL SETTING EXIST TRUE FOR TEST---')
-    portfolio.exist = True
-    portfolio.add_asset('cash')
-    print(portfolio.assets)
+    testPortfolio.add_asset('cash')
+    print(testPortfolio.assets)
+
+def test_portfolio_delete(testPortfolio):
+   testPortfolio.delete_asset('CASH')
+   result = 'CASH' in testPortfolio.assets
+   assert(result == False)
