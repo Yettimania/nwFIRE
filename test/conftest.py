@@ -10,6 +10,7 @@ from nwfire.portfolio import Portfolio
 def testPortfolio():
     print("FOR TESTING USE NAME 'TEST' with value '100.12'")
     portfolio = Portfolio('test_portfolio')
+    # SET PATH MANUALLY FOR TEST ONLY
     portfolio.path = './test/test_portfolio.pkl'
     portfolio.add_asset('cash')
     return portfolio

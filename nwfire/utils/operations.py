@@ -10,4 +10,5 @@ def load_portfolio(portfolio_path):
     file = open(portfolio_path, 'rb')
     portfolio = pickle.load(file)
     file.close()
+    portfolio.exist = True
     return portfolio

@@ -1,14 +1,16 @@
 import click
+from os import path
 from nwfire.portfolio import Portfolio
-from nwfire.utils.operations import save_portfolio 
+from nwfire.utils.operations import save_portfolio, load_portfolio
 
 
 @click.group()
-@click.option('--portfolio', required = True, type = str)
+@click.option('--portfolio', required=True, type=str)
 @click.pass_context
 def cli(ctx, portfolio):
     ctx.ensure_object(dict)
     ctx.obj['PORTFOLIO'] = portfolio
+
 
 @cli.command()
 @click.pass_context
@@ -17,7 +19,13 @@ def add(ctx, asset_type):
     """
     Add asset to specific portfolio
     """
-    portfolio = Portfolio(ctx.obj['PORTFOLIO'])
+    portfolio_name = ctx.obj['PORTFOLIO']
+    pkl_path = f'./data/{portfolio_name}.pkl'
+    if path.exists(pkl_path):
+        portfolio = load_portfolio(pkl_path)
+    else:
+        portfolio = Portfolio(portfolio_name)
+
     portfolio.add_asset(asset_type)
     save_portfolio(portfolio)
 
