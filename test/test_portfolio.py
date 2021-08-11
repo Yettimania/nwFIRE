@@ -30,8 +30,7 @@ def test_portfolio_not_exist(portolio_class):
 def test_portfolio_load_append():
     portfolio = load_portfolio('./test/test_portfolio.pkl')
     # SET TO TRUE FOR TEST ONLY
+    print('\n---MANUAL SETTING EXIST TRUE FOR TEST---')
     portfolio.exist = True
     portfolio.add_asset('cash')
     print(portfolio.assets)
-
-

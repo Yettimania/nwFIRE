@@ -8,11 +8,15 @@ from nwfire.portfolio import Portfolio
 
 @pytest.fixture
 def testPortfolio():
-    print("FOR TESTING USE NAME 'TEST' with value '100.12'")
     portfolio = Portfolio('test_portfolio')
     # SET PATH MANUALLY FOR TEST ONLY
+    print("\n---MANUALLY SET PATH TO TEST FOLDER---")
     portfolio.path = './test/test_portfolio.pkl'
-    portfolio.add_asset('cash')
+    portfolio.assets['CASH'] = Cash(5000)
+    portfolio.assets['STOCK'] = Stock(10, 'TWST')
+    portfolio.assets['FUND'] = Fund(25.5, 'VWSTX', [0.1, 0.4, 0.5], 'LARGE BLEND')
+    portfolio.assets['EQUITY'] = Equity(15000)
+    portfolio.assets['REALESTATE'] = RealEstate(500000)
     return portfolio
 
 

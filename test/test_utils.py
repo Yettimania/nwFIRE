@@ -11,11 +11,12 @@ def test_portfolio_save(testPortfolio):
 
 def test_portfolio_load():
     '''
-    Test the loading of a portfolio from a picle file to
+    Test the loading of a portfolio from a pickle file to
     conduct additional operations.
     '''
     portfolio = load_portfolio('./test/test_portfolio.pkl')
+    print(f'PORTFOLIO ASSETS: {portfolio.assets}')
     assert(bool(portfolio.assets))
-    assert(portfolio.assets['TEST'].__class__.__name__ == 'Cash')
-    assert(portfolio.assets['TEST'].amount == 100.12)
+    assert(portfolio.assets['CASH'].__class__.__name__ == 'Cash')
+    assert(portfolio.assets['CASH'].amount == 5000)
 
