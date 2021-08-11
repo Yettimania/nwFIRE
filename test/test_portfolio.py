@@ -7,8 +7,8 @@ def test_portfolio_name(portolio_class):
 
 def test_portfolio_path(portolio_class):
     portfolio = portolio_class
-    assert(portfolio.path == '/data/testPortfolio.pkl')
+    assert(portfolio.path == './data/testPortfolio.pkl')
 
 def test_portfolio_not_exist(portolio_class):
     portfolio = portolio_class
-    assert(portfolio.exists == False)
+    assert(portfolio.exist == False)

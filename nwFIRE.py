@@ -1,21 +1,25 @@
 import click
 from nwfire.portfolio import Portfolio
+from nwfire.utils.operations import save_portfolio 
 
-
-portfolio = Portfolio('KyleLindsay')
 
 @click.group()
-def cli():
-    pass
+@click.option('--portfolio', required = True, type = str)
+@click.pass_context
+def cli(ctx, portfolio):
+    ctx.ensure_object(dict)
+    ctx.obj['PORTFOLIO'] = portfolio
 
 @cli.command()
-def add():
+@click.pass_context
+@click.argument('asset_type')
+def add(ctx, asset_type):
     """
     Add asset to specific portfolio
     """
-    print('ADD COMMAND')
-    # portfolio = Portfolio('KyleLindsay')
-    portfolio.add_asset()
+    portfolio = Portfolio(ctx.obj['PORTFOLIO'])
+    portfolio.add_asset(asset_type)
+    save_portfolio(portfolio)
 
 
 @cli.command()
@@ -69,4 +73,4 @@ def plot():
 
 
 if __name__ == '__main__':
-    cli()
+    cli(obj={})
