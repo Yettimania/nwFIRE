@@ -47,13 +47,23 @@ def delete(ctx, asset_key):
         print("Portfolio does not exist. Can't delete.")
 
 
-
 @cli.command()
-def edit():
+@click.pass_context
+@click.argument('asset_key')
+@click.option('--field', required=True, type=str)
+@click.option('--value', required=True, type=str)
+def edit(ctx, asset_key, field, value):
     """
     Edit asset in specific portfolio
     """
-    print('EDIT COMMAND')
+    portfolio_name = ctx.obj['PORTFOLIO']
+    pkl_path = f'./data/{portfolio_name}.pkl'
+    if path.exists(pkl_path):
+        portfolio = load_portfolio(pkl_path)
+        portfolio.edit_asset(asset_key, field, value)
+        save_portfolio(portfolio)
+    else:
+        print("Portfolio does not exist. Can't delete.")
 
 
 @cli.command()

@@ -30,9 +30,33 @@ def test_portfolio_not_exist(portolio_class):
 def test_portfolio_add(testPortfolio):
     # SET TO TRUE FOR TEST ONLY
     testPortfolio.add_asset('cash')
-    print(testPortfolio.assets)
 
 def test_portfolio_delete(testPortfolio):
    testPortfolio.delete_asset('CASH')
    result = 'CASH' in testPortfolio.assets
    assert(result == False)
+
+def test_portfolio_edit(testPortfolio):
+    testPortfolio.edit_asset('CASH', 'amount', 2000.50)
+    result = testPortfolio.assets['CASH'].amount
+    assert(result == 2000.50)
+
+    testPortfolio.edit_asset('EQUITY', 'amount', 123.50)
+    result = testPortfolio.assets['EQUITY'].amount
+    assert(result == 123.50)
+
+    testPortfolio.edit_asset('REALESTATE', 'amount', 1235000)
+    result = testPortfolio.assets['REALESTATE'].amount
+    assert(result == 1235000)
+
+    testPortfolio.edit_asset('STOCK', 'shares', 500)
+    result = testPortfolio.assets['STOCK'].shares
+    assert(result == 500)
+
+    testPortfolio.edit_asset('FUND', 'composition', [0.2, 0.5, 0.3])
+    result = testPortfolio.assets['FUND'].composition
+    assert(result == [0.2,0.5,0.3])
+
+    testPortfolio.edit_asset('FUND', 'composition_type', 'SMALL_CAP')
+    result = testPortfolio.assets['FUND'].composition_type
+    assert(result == 'SMALL_CAP')

@@ -75,7 +75,7 @@ class Portfolio:
         print('Asset has been added to portfolio.')
 
     def delete_asset(self, asset_key):
-        print("Deleting asset from portfolio.")
+        print("Deleting asset from portfolio...")
         try:
             del self.assets[asset_key]
         except:
@@ -83,8 +83,16 @@ class Portfolio:
             print('Confirm argument passed in is correct.')
 
 
-    def edit_asset(self):
-        None
+    def edit_asset(self, asset_key, field, value):
+        print(f'Editing asset {asset_key} in portfolio...')
+        try:
+            asset_class = self.assets[asset_key]
+        except:
+            print('Unable to located asset in portfolio.')
+            exit()
+
+        asset_class.edit(field, value)
+
 
     def forecast_portfolio(self):
         None

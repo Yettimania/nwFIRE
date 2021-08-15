@@ -10,6 +10,15 @@ def test_cash(cash_class):
     assert(asset.amount == 5000)
 
 
+def test_cash_edit(cash_class):
+    '''
+    Edit cash amount in class object.
+    '''
+    asset = cash_class
+    asset.edit('amount', 1000.50)
+    assert(asset.amount == 1000.50)
+
+
 def test_stock(stock_class):
     '''
     Initialize stock asset class.
@@ -23,17 +32,44 @@ def test_stock(stock_class):
 def test_equity(equity_class):
     '''
     Initialize equity asset class.
+
+    Edit command is same for the cash so not necessary to repeat.
     '''
     asset = equity_class
     assert(asset.__class__.__name__ == 'Equity')
     assert(asset.amount == 123.45)
 
 
+def test_equity_edit_success(stock_class):
+    '''
+    Initialize equity asset class.
+
+    Edit command is same for the cash so not necessary to repeat.
+    '''
+    asset = stock_class
+    asset.edit('shares', 500)
+    asset.edit('ticker', 'LLL')
+    assert(asset.shares == 500)
+    assert(asset.ticker == 'LLL')
+
+
+def test_equity_edit_failure(stock_class):
+    '''
+    Initialize equity asset class.
+
+    Edit command is same for the cash so not necessary to repeat.
+    '''
+    asset = stock_class
+    asset.edit('shares', 'LLL')
+
+
 def test_real_estate(realEstate_class):
     '''
     Initialize real estate asset class.
+
+    Edit command is same for the cash so not necessary to repeat.
     '''
-    asset = realEstate_class 
+    asset = realEstate_class
     assert(asset.__class__.__name__ == 'RealEstate')
     assert(asset.amount == 1200000)
 
