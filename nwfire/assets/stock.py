@@ -14,3 +14,7 @@ class Stock():
                 print("Specify field not found or unable to edit.")
         except ValueError:
             print("Can't cast shares to float value.")
+
+    def summary(self):
+        print(f'Shares: {self.shares}')
+        print(f'Ticker: {self.ticker}')

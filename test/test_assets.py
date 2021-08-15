@@ -8,6 +8,7 @@ def test_cash(cash_class):
     asset = cash_class
     assert(asset.__class__.__name__ == 'Cash')
     assert(asset.amount == 5000)
+    asset.summary()
 
 
 def test_cash_edit(cash_class):
@@ -27,6 +28,7 @@ def test_stock(stock_class):
     assert(asset.__class__.__name__ == 'Stock')
     assert(asset.shares == 123.456)
     assert(asset.ticker == 'TWST')
+    asset.summary()
 
 
 def test_equity(equity_class):
@@ -38,6 +40,7 @@ def test_equity(equity_class):
     asset = equity_class
     assert(asset.__class__.__name__ == 'Equity')
     assert(asset.amount == 123.45)
+    asset.summary()
 
 
 def test_equity_edit_success(stock_class):
@@ -72,6 +75,7 @@ def test_real_estate(realEstate_class):
     asset = realEstate_class
     assert(asset.__class__.__name__ == 'RealEstate')
     assert(asset.amount == 1200000)
+    asset.summary()
 
 
 def test_fund_class(fund_class):
@@ -84,3 +88,4 @@ def test_fund_class(fund_class):
     assert(asset.ticker == 'VWSTX')
     assert(asset.composition == [0.1, 0.4, 0.5])
     assert(asset.composition_type == 'Large Blend')
+    asset.summary()

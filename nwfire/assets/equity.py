@@ -7,3 +7,6 @@ class Equity():
             self.amount = float(value)
         except:
             print('Unable to edit cash asset to specific value.')
+
+    def summary(self):
+        print(f'Equity Value: $ {self.amount:.2f}')

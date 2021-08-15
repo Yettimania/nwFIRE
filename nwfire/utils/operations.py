@@ -12,3 +12,7 @@ def load_portfolio(portfolio_path):
     file.close()
     portfolio.exist = True
     return portfolio
+
+def percentage(value):
+    percentage = f'{value * 100:.1f} %'
+    return percentage

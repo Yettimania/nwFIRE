@@ -101,7 +101,7 @@ class Portfolio:
         None
 
     def summarize_portfolio(self):
-        None
+        print("Summary of portfolio")
 
     def update_market_value(self):
         None

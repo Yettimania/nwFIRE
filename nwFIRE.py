@@ -67,11 +67,26 @@ def edit(ctx, asset_key, field, value):
 
 
 @cli.command()
-def summarize():
+@click.pass_context
+@click.option('--asset', type=str)
+def summarize(ctx, asset):
     """
     Summarize portfolio
     """
-    print('SUMMARIZE COMMAND')
+    portfolio_name = ctx.obj['PORTFOLIO']
+    pkl_path = f'./data/{portfolio_name}.pkl'
+    if path.exists(pkl_path):
+        portfolio = load_portfolio(pkl_path)
+        if bool(asset):
+            if asset in portfolio.assets.keys():
+                print(f'Portfolio Asset: {asset.upper()}')
+                portfolio.assets[asset.upper()].summary()
+            else:
+                print("Asset not found in portfolio.")
+        else:
+            print("Portfolio Only!")
+            print(portfolio.assets)
+            portfolio.summarize_portfolio()
 
 
 @cli.command()

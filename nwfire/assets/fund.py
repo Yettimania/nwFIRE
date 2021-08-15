@@ -1,3 +1,6 @@
+from nwfire.utils.operations import percentage
+
+
 class Fund():
     def __init__(self, shares, ticker,
                  composition, composition_type):
@@ -20,3 +23,12 @@ class Fund():
                 print("Specific field no found or unable to edit.")
         except ValueError:
             print("Cant cast specifc value.")
+
+
+    def summary(self):
+        print(f'Shares: {self.shares}')
+        print(f'Ticker: {self.ticker}')
+        print(f'Cash Percentage: {percentage(self.composition[0])}')
+        print(f'Bond Percentage: {percentage(self.composition[1])}')
+        print(f'Stock Percentage: {percentage(self.composition[2])}')
+        print(f'Composition Type: {self.composition_type}')
