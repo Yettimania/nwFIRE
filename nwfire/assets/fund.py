@@ -6,6 +6,7 @@ class Fund():
                  composition, composition_type):
         self.shares = shares
         self.ticker = ticker
+        self.last_closing_price = None
         self.composition = composition
         self.composition_type = composition_type
 
@@ -16,9 +17,13 @@ class Fund():
             elif field.upper() == "TICKER":
                 self.ticker = str(value)
             elif field.upper() == "COMPOSITION":
-                self.composition = list(value)
+                value = value.split('-')
+                composition = [float(num) for num in value]
+                self.composition = composition
             elif field.upper() == "COMPOSITION_TYPE":
-                self.composition_type = str(value)
+                value = value.split('-')
+                composition_type = [str(x) for x in value]
+                self.composition_type = composition_type 
             else:
                 print("Specific field no found or unable to edit.")
         except ValueError:

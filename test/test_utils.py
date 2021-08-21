@@ -20,3 +20,9 @@ def test_portfolio_load():
     assert(portfolio.assets['CASH'].__class__.__name__ == 'Cash')
     assert(portfolio.assets['CASH'].amount == 5000)
 
+def test_fetch_stock_value():
+    invest_list = ["TWST", "L3H", "FLS"]
+    result = fetch_stock_value(invest_list)
+    print(result)
+    assert True
+

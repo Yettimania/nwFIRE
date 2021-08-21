@@ -69,7 +69,7 @@ def edit(ctx, asset_key, field, value):
 @cli.command()
 @click.pass_context
 @click.option('--asset', type=str)
-def summarize(ctx, asset):
+def summary(ctx, asset):
     """
     Summarize portfolio
     """
@@ -84,15 +84,26 @@ def summarize(ctx, asset):
             else:
                 print("Asset not found in portfolio.")
         else:
-            print("Portfolio Only!")
-            print(portfolio.assets)
             portfolio.summarize_portfolio()
 
 
 @cli.command()
-def update():
+@click.pass_context
+def report(ctx):
     """
     Update portfolio with latest stock prices
+    """
+    portfolio_name = ctx.obj['PORTFOLIO']
+    pkl_path = f'./data/{portfolio_name}.pkl'
+    if path.exists(pkl_path):
+        portfolio = load_portfolio(pkl_path)
+        portfolio.detailed_report()
+
+
+@cli.command()
+def append_history():
+    """
+    Append historical data to a portfolio
     """
     print('UPDATE COMMAND')
 

@@ -4,6 +4,7 @@ from nwfire.assets.stock import Stock
 from nwfire.assets.equity import Equity
 from nwfire.assets.realestate import RealEstate
 from nwfire.assets.fund import Fund
+from nwfire.utils.operations import fetch_stock_value, percentage
 
 
 class Portfolio:
@@ -56,19 +57,24 @@ class Portfolio:
             try:
                 name = str(input("Funds Ticker: ")).upper()
                 num_shares = float(input("Number of Shares: "))
-                composition = input("Enter [CASH,BONDS,STOCK] Ratio: ").split(' ')
+                composition = input(
+                    "Enter CASH-BONDS-STOCK Ratio: ").split('-')
                 composition = [float(num) for num in composition]
                 total = sum(composition)
                 if total != 1.0:
                     print('Composition of asset must equal 1.0')
                     exit()
-                composition_type = str(input("Enter fund category: "))
+                composition_type = input("Enter category for CASH-BONDS-STOCKS: ").split('-')
+                composition_type = [str(x) for x in composition_type]
+                if len(composition_type) != 3:
+                    print('Must enter a type for CASH, BONDS and STOCKS.')
+                    exit()
             except ValueError:
                 print('Value Error: Amount must be an integer or float. \
                         composition must be ratios that add to 1.')
                 exit()
             self.assets[name] = Fund(num_shares, name,
-                    composition, composition_type)
+                                     composition, composition_type)
         else:
             print('Asset type not recognized. Please select \
                     CASH, STOCK, EQUITY, REALESTATE, FUND.')
@@ -82,7 +88,6 @@ class Portfolio:
             print('Unable to delete asset from portoflio.')
             print('Confirm argument passed in is correct.')
 
-
     def edit_asset(self, asset_key, field, value):
         print(f'Editing asset {asset_key} in portfolio...')
         try:
@@ -93,7 +98,6 @@ class Portfolio:
 
         asset_class.edit(field, value)
 
-
     def forecast_portfolio(self):
         None
 
@@ -101,10 +105,144 @@ class Portfolio:
         None
 
     def summarize_portfolio(self):
-        print("Summary of portfolio")
+        cash_assets = {}
+        stock_assets = {}
+        realestate_assets = {}
+        fund_assets = {}
+        equity_assets = {}
 
-    def update_market_value(self):
-        None
+        for name, asset in self.assets.items():
+            _asset = asset.__class__.__name__
+
+            if _asset == "Cash":
+                cash_assets[name] = asset
+            elif _asset == "Stock":
+                stock_assets[name] = asset
+            elif _asset == "RealEstate":
+                realestate_assets[name] = asset
+            elif _asset == "Fund":
+                fund_assets[name] = asset
+            elif _asset == "Equity":
+                equity_assets[name] = asset
+
+        print("\nCASH ASSETS")
+        print("-" * 26)
+        print('{0:8<s}{1:>16s}'.format('NAME', 'VALUE'))
+        print("-" * 26)
+        for key, asset in cash_assets.items():
+            print('{0:<8s} $ {1:>15,.2f}'.format(key, asset.amount))
+
+        print("\nFUND ASSETS")
+        print("-" * 26)
+        print('{0:8<s}{1:>18s}'.format('NAME', '# SHARES'))
+        print("-" * 26)
+        for key, asset in fund_assets.items():
+            print('{0:<8s} # {1:>15,.3f}'.format(key, asset.shares))
+
+        print("\nSTOCK ASSETS")
+        print("-" * 26)
+        print('{0:8<s}{1:>18s}'.format('NAME', '# SHARES'))
+        print("-" * 26)
+        for key, asset in stock_assets.items():
+            print('{0:<8s} # {1:>15,.3f}'.format(key, asset.shares))
+
+        print("\nREAL ESTATE ASSETS")
+        print("-" * 26)
+        print('{0:8<s}{1:>16s}'.format('NAME', 'VALUE'))
+        print("-" * 26)
+        for key, asset in realestate_assets.items():
+            print('{0:<8s} $ {1:>15,.2f}'.format(key, asset.amount))
+
+        print("\nEQUITY ASSETS")
+        print("-" * 26)
+        print('{0:8<s}{1:>16s}'.format('NAME', 'VALUE'))
+        print("-" * 26)
+        for key, asset in equity_assets.items():
+            print('{0:<8s} $ {1:>15,.2f}'.format(key, asset.amount))
+        print()
+
+    def detailed_report(self):
+        self._fetch_market_value()
+
+        asset_sums = {
+            'Cash': 0.0,
+            'Fund': 0.0,
+            'Stock': 0.0,
+            'RealEstate': 0.0,
+            'Equity': 0.0
+        }
+
+        asset_types = {
+                'Cash':0.00,
+                'Stocks':0.00,
+                }
+
+        for asset in list(self.assets.values()):
+            if asset.__class__.__name__ == 'Fund':
+                for comp_type in asset.composition_type:
+                    asset_types[comp_type] = 0.00
+
+        for asset in list(self.assets.values()):
+            _asset = asset.__class__.__name__
+
+            if _asset == 'Fund':
+                _composition = asset.composition
+                _composition_type = asset.composition_type
+                asset_value = asset.shares * asset.last_closing_price
+                for index, comp_value in enumerate(_composition):
+                    if comp_value != 0.0:
+                        asset_types[_composition_type[index]] += asset_value * comp_value
+            elif _asset == 'Stock':
+                asset_types['Stocks'] += (asset.shares * asset.last_closing_price)
+            elif _asset == 'Cash':
+                asset_types['Cash'] += asset.amount
+
+
+            if _asset == 'Stock' or _asset == 'Fund':
+                asset_sums[_asset] += (asset.shares * asset.last_closing_price)
+            else:
+                asset_sums[_asset] += asset.amount
+
+        networth = sum(asset_sums.values())
+
+        print('\nNETWORTH: $ {:,.0f}'.format(networth))
+        print('-' * 37)
+        print('{0:<12s}{1:^15s}{2:>8s}'.format(
+               "ASSET", "VALUE", "%"))
+        print('-' * 37)
+
+        for asset, value in asset_sums.items():
+            print('{0:<12s} $ {1:>10,.0f} {2:>11s}'.format(
+            asset, value, percentage(value/networth)))
+        print()
+
+        print('\nINVESTMENT ALLOCATION OF NETWORTH')
+        print('-' * 37)
+        print('{0:<12s}{1:^15s}{2:>8s}'.format(
+               "ASSET", "VALUE", "%"))
+        print('-' * 37)
+
+        for asset, value in asset_types.items():
+            if value != 0.00:
+                print('{0:<12s} $ {1:>10,.0f} {2:>11s}'.format(
+                asset, value, percentage(value/networth)))
+
+
+    def _fetch_market_value(self):
+        ticker_list = []
+
+        print("Fetching latest market value...This may take a moment...")
+
+        for key, value in self.assets.items():
+            if value.__class__.__name__ == "Stock" or value.__class__.__name__ == "Fund":
+                ticker_list.append(key)
+
+        results = fetch_stock_value(ticker_list)
+
+        for ticker, value in results.items():
+            asset = self.assets[ticker]
+            asset.last_closing_price = float(value)
+        print("Latest market values obtained.")
 
     def _prompt_existence(self):
         if self.exist == False:
