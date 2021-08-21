@@ -98,6 +98,9 @@ def report(ctx):
     if path.exists(pkl_path):
         portfolio = load_portfolio(pkl_path)
         portfolio.detailed_report()
+        save_portfolio(portfolio)
+    else:
+        print("Portfolio not found. Exiting program.")
 
 
 @cli.command()

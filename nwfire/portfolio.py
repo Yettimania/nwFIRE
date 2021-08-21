@@ -13,6 +13,7 @@ class Portfolio:
         self.path = f'./data/{self.name}.pkl'
         self.exist = path.exists(self.path)
         self.assets = {}
+        self.networth = 0.00
         self.historical_perf = []
 
     def add_asset(self, asset_type):
@@ -203,9 +204,9 @@ class Portfolio:
             else:
                 asset_sums[_asset] += asset.amount
 
-        networth = sum(asset_sums.values())
+        self.networth = sum(asset_sums.values())
 
-        print('\nNETWORTH: $ {:,.0f}'.format(networth))
+        print('\nNETWORTH: $ {:,.0f}'.format(self.networth))
         print('-' * 37)
         print('{0:<12s}{1:^15s}{2:>8s}'.format(
                "ASSET", "VALUE", "%"))
@@ -213,36 +214,42 @@ class Portfolio:
 
         for asset, value in asset_sums.items():
             print('{0:<12s} $ {1:>10,.0f} {2:>11s}'.format(
-            asset, value, percentage(value/networth)))
+            asset, value, percentage(value/self.networth)))
         print()
 
-        print('\nINVESTMENT ALLOCATION OF NETWORTH')
+        print('\nFINANCIAL ALLOCATION')
         print('-' * 37)
         print('{0:<12s}{1:^15s}{2:>8s}'.format(
                "ASSET", "VALUE", "%"))
         print('-' * 37)
 
+        financial_assets = sum(asset_types.values())
+
         for asset, value in asset_types.items():
             if value != 0.00:
                 print('{0:<12s} $ {1:>10,.0f} {2:>11s}'.format(
-                asset, value, percentage(value/networth)))
+                asset, value, percentage(value/financial_assets)))
 
 
     def _fetch_market_value(self):
-        ticker_list = []
+        try:
+            ticker_list = []
 
-        print("Fetching latest market value...This may take a moment...")
+            print("Fetching latest market value...This may take a moment...")
 
-        for key, value in self.assets.items():
-            if value.__class__.__name__ == "Stock" or value.__class__.__name__ == "Fund":
-                ticker_list.append(key)
+            for key, value in self.assets.items():
+                if value.__class__.__name__ == "Stock" or value.__class__.__name__ == "Fund":
+                    ticker_list.append(key)
 
-        results = fetch_stock_value(ticker_list)
+            results = fetch_stock_value(ticker_list)
 
-        for ticker, value in results.items():
-            asset = self.assets[ticker]
-            asset.last_closing_price = float(value)
-        print("Latest market values obtained.")
+            for ticker, value in results.items():
+                asset = self.assets[ticker]
+                asset.last_closing_price = float(value)
+            print('Latest market values obtained.')
+        except:
+            print(f'Unable to fetch stock data on {key}.')
+            exit()
 
     def _prompt_existence(self):
         if self.exist == False:
