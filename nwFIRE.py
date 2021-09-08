@@ -154,14 +154,5 @@ def forecast():
     print('FORECAST COMMAND')
 
 
-# NOTE THIS MAY NOT WORK WELL AND BE REMOVED
-@cli.command()
-def plot():
-    """
-    Command line plot of portfolio performance
-    """
-    print('PLOT COMMAND')
-
-
 if __name__ == '__main__':
     cli(obj={})
