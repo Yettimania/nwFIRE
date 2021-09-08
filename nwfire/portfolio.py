@@ -14,7 +14,7 @@ class Portfolio:
         self.exist = path.exists(self.path)
         self.assets = {}
         self.networth = 0.00
-        self.historical_perf = []
+        self.historical_perf = {}
 
     def add_asset(self, asset_type):
         self._prompt_existence()
@@ -230,6 +230,10 @@ class Portfolio:
                 print('{0:<12s} $ {1:>10,.0f} {2:>11s}'.format(
                 asset, value, percentage(value/financial_assets)))
 
+    def append_history(self, date, value):
+        self.historical_perf[date] = value
+        print("Successfully appended performance data.")
+
 
     def _fetch_market_value(self):
         try:
@@ -244,8 +248,15 @@ class Portfolio:
             results = fetch_stock_value(ticker_list)
 
             for ticker, value in results.items():
-                asset = self.assets[ticker]
-                asset.last_closing_price = float(value)
+                if value != None:
+                    asset = self.assets[ticker]
+                    asset.last_closing_price = float(value)
+                else:
+                    print("Unable to retrieve stock value.")
+                    print("Enter last_closing_price manually: ")
+                    response = input('Manually enter closing price for {}: '.format(ticker))
+                    asset = self.assets[ticker]
+                    asset.last_closing_price = float(response)
             print('Latest market values obtained.')
         except:
             print(f'Unable to fetch stock data on {key}.')

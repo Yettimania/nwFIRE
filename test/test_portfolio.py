@@ -53,10 +53,16 @@ def test_portfolio_edit(testPortfolio):
     result = testPortfolio.assets['STOCK'].shares
     assert(result == 500)
 
-    testPortfolio.edit_asset('FUND', 'composition', [0.2, 0.5, 0.3])
+    testPortfolio.edit_asset('FUND', 'composition', "0.2-0.5-0.3")
     result = testPortfolio.assets['FUND'].composition
     assert(result == [0.2,0.5,0.3])
 
     testPortfolio.edit_asset('FUND', 'composition_type', 'SMALL_CAP')
     result = testPortfolio.assets['FUND'].composition_type
-    assert(result == 'SMALL_CAP')
+    assert(result == ['SMALL_CAP'])
+
+def test_portfolio_append_history(testPortfolio):
+    testPortfolio.append_history('09/08/21', 1000.12)
+    result = testPortfolio.historical_perf['09/08/21']
+    print(testPortfolio.historical_perf)
+    assert (result == 1000.12)

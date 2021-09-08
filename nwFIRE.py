@@ -104,11 +104,22 @@ def report(ctx):
 
 
 @cli.command()
-def append_history():
+@click.pass_context
+def append_history(ctx):
     """
     Append historical data to a portfolio
     """
-    print('UPDATE COMMAND')
+    portfolio_name = ctx.obj['PORTFOLIO']
+    pkl_path = f'./data/{portfolio_name}.pkl'
+    if path.exists(pkl_path):
+        portfolio = load_portfolio(pkl_path)
+        date = str(input("Enter date of evaluation (DD/MM/YY): "))
+        value = float(input("Enter value on date: "))
+        portfolio.append_history(date, value)
+        print(portfolio.historical_perf)
+        save_portfolio(portfolio)
+    else:
+        print("Portfolio not found. Exiting program.")
 
 
 @cli.command()

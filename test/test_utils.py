@@ -2,6 +2,7 @@ import pytest
 from nwfire.portfolio import Portfolio
 from nwfire.utils.operations import *
 
+
 def test_portfolio_save(testPortfolio):
     '''
     Test saving a portfolio object to a pickle file
@@ -21,8 +22,17 @@ def test_portfolio_load():
     assert(portfolio.assets['CASH'].amount == 5000)
 
 def test_fetch_stock_value():
-    invest_list = ["TWST", "L3H", "FLS"]
+    invest_list = ["TWST", "L3H", "FLS", "XIX"]
     result = fetch_stock_value(invest_list)
     print(result)
     assert True
 
+
+def test_plot_history():
+    history = {
+            '01/04/19': 10000,
+            '11/22/19': 50000.12,
+            '03/14/20': 500000.143,
+            '09/08/21': 750000
+            }
+    plot_history(history)
