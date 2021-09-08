@@ -1,4 +1,5 @@
 from os import path
+from datetime import date
 from nwfire.assets.cash import Cash
 from nwfire.assets.stock import Stock
 from nwfire.assets.equity import Equity
@@ -14,7 +15,7 @@ class Portfolio:
         self.exist = path.exists(self.path)
         self.assets = {}
         self.networth = 0.00
-        self.historical_perf = {}
+        self.historical_perf = []
 
     def add_asset(self, asset_type):
         self._prompt_existence()
@@ -230,8 +231,15 @@ class Portfolio:
                 print('{0:<12s} $ {1:>10,.0f} {2:>11s}'.format(
                 asset, value, percentage(value/financial_assets)))
 
-    def append_history(self, date, value):
-        self.historical_perf[date] = value
+        response = input("Do you want to append this analysis to historical context? [y/n]: ")
+        if response.upper() == 'Y':
+            today = date.today().strftime("%m/%d/%Y")
+            self.historical_perf[today] = {'networth': self.networth,
+                                           'financial': financial_assets}
+
+    def append_history(self, date, networth, financial):
+        self.historical_perf[date] = {'networth': self.networth,
+                                      'financial': financial}
         print("Successfully appended performance data.")
 
 

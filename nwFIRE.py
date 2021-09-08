@@ -112,15 +112,39 @@ def append_history(ctx):
     portfolio_name = ctx.obj['PORTFOLIO']
     pkl_path = f'./data/{portfolio_name}.pkl'
     if path.exists(pkl_path):
-        portfolio = load_portfolio(pkl_path)
-        date = str(input("Enter date of evaluation (DD/MM/YY): "))
-        value = float(input("Enter value on date: "))
-        portfolio.append_history(date, value)
-        print(portfolio.historical_perf)
-        save_portfolio(portfolio)
+        try:
+            portfolio = load_portfolio(pkl_path)
+            date = str(input("Enter date of evaluation (MM/DD/YY): "))
+            networth = float(input("Enter networth on date: "))
+            financial_value = float(input("Enter financial value on date: "))
+            portfolio.append_history(date, networth, financial_value)
+            print(portfolio.historical_perf)
+            save_portfolio(portfolio)
+        except:
+            print("Could not append historical data.")
+            print("Confirm date format and float value entered.")
     else:
         print("Portfolio not found. Exiting program.")
 
+@cli.command()
+@click.pass_context
+def delete_history(ctx):
+    """
+    Delete a date value pair from class object.
+    """
+    portfolio_name = ctx.obj['PORTFOLIO']
+    pkl_path = f'./data/{portfolio_name}.pkl'
+    if path.exists(pkl_path):
+        try:
+            portfolio = load_portfolio(pkl_path)
+            print("List of dates in history...")
+            print(list(portfolio.historical_perf.keys()))
+            response = input("Enter date you'd like to delete: ")
+            portfolio.historical_perf.pop(str(response))
+            save_portfolio(portfolio)
+        except:
+            print("Could not delete date for historical data.")
+            print("Confirm date format is correct. ")
 
 @cli.command()
 def forecast():
@@ -130,6 +154,7 @@ def forecast():
     print('FORECAST COMMAND')
 
 
+# NOTE THIS MAY NOT WORK WELL AND BE REMOVED
 @cli.command()
 def plot():
     """

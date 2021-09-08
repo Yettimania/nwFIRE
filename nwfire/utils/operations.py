@@ -46,6 +46,7 @@ def fetch_stock_value(invest_list):
 
     return get_prices(tickers)
 
+''' NOTE THIS MAY NOT WORK DUE TO SCALING '''
 def plot_history(history_dict):
     hist_datetime = [datetime.strptime(i, '%m/%d/%y') for i in history_dict.keys()]
     delta_days = [0]
